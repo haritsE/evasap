@@ -86,16 +86,15 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 
   $scope.facebook = function() {
-    console.log("CLICKED!!!!!");
-      Auth.$authWithOAuthPopup("facebook").then($scope.succeed).catch(function(error) {
-        console.log("Authentication failed:", error);
-      });
+    Auth.$authWithOAuthPopup("facebook").then($scope.succeed).catch(function(error) {
+      console.log("Authentication failed:", error);
+    });
   }
 
   $scope.google = function() {
-      Auth.$authWithOAuthPopup("google").then($scope.succeed).catch(function(error) {
-        console.log("Authentication failed:", error);
-      });
+    Auth.$authWithOAuthPopup("google").then($scope.succeed).catch(function(error) {
+      console.log("Authentication failed:", error);
+    });
   }
 })
 
@@ -201,6 +200,16 @@ angular.module('versinfocus.controllers', ['ionic'])
     }
   };
 
+  $http.get(FBURL + "/needs.json").success(function(result){
+    var list = [];
+    for(key in result){
+      if(!result[key]) continue;
+      result[key].id = key;
+      list.push(result[key])
+    }
+    $scope.needs = list;
+  });
+
   MapInit.currentLocation($scope, function (coords) {
     $scope.marker.coords = coords;
     $scope.map.center = coords;
@@ -212,6 +221,11 @@ angular.module('versinfocus.controllers', ['ionic'])
     $http.post(FBURL + '/victims/.json', $scope.data)
       .success(function() {
         $state.go('tab.victimMap', {}, {reload: true});
+        $http.get(FBURL + '/needs/' + $scope.data.need_id + '.json').success(function(result){
+          if (!result.demand) result.demand = 0;
+          result.demand = parseInt(result.demand) + parseInt($scope.data.quantity);
+          $http.put(FBURL + '/needs/' + $scope.data.need_id + '.json', result);
+        });
       });
   }
 
@@ -235,8 +249,18 @@ angular.module('versinfocus.controllers', ['ionic'])
       };
 
       $cordovaCamera.getPicture(options).then(function (imageData) {
-        
         $scope.picture = "data:image/jpeg;base64," + imageData;
+        $http({
+            url:'http://busintime.id:5001/versy/upload',
+            method:'POST',
+            data:JSON.stringify({file: $scope.picture}),
+            headers:{'Content-Type':'application/json'}
+        }).success(function (res) {
+          $scope.data.photo = res;
+        })
+        .error(function (reponse) {
+          console.log(response);
+        });
       }, function(err) {
         alert('error');
       });
@@ -266,6 +290,10 @@ angular.module('versinfocus.controllers', ['ionic'])
     $scope.needs = list;
   });
 
+  $scope.back = function() {
+    window.history.back();
+  }
+
   $scope.submit = function () {
     $http.post(FBURL + '/supplies.json', $scope.data)
       .success(function() {
@@ -283,6 +311,9 @@ angular.module('versinfocus.controllers', ['ionic'])
 
 .controller('OrganizationCtrl', function ($scope, $http, FBURL) {
   $scope.data = {};
+  $scope.back = function() {
+    window.history.back();
+  }
   $scope.submit = function () {
     $http.post(FBURL + '/organizations.json', $scope.data)
       .success(function() {

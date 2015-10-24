@@ -65,6 +65,12 @@ angular.module('versinfocus', [
     controller: 'LaporCtrl',
   })
 
+  .state('victim', {
+    url: '/victim/:id',
+    templateUrl: 'templates/victim.html',
+    controller: 'VictimCtrl',
+  })
+
   .state('supply', {
     url: '/supply',
     templateUrl: 'templates/supply.html',
