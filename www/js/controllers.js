@@ -369,7 +369,6 @@ angular.module('versinfocus.controllers', ['ionic'])
             $scope.severityLevel = 4;
           }
 
-          if(result[key].latestDate)
           detectors.push({
             id: key,
             coords: {
@@ -440,5 +439,17 @@ angular.module('versinfocus.controllers', ['ionic'])
   });
   $scope.$on('destroy', function() {
     unwatch();
+  });
+})
+
+.controller('OrganizationsCtrl', function ($scope, $http, FBURL, Helper, $firebaseObject) {
+  $http.get(FBURL + '/organizations.json').success(function (result) {
+    var orgs = [];
+    for(key in result){
+      if(!result[key]) continue;
+      result[key].id = key;
+      orgs.push(result[key])
+    }
+    $scope.orgs = orgs;
   });
 });
