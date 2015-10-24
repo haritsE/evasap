@@ -7,25 +7,13 @@
   </ion-header-bar>
   <ion-content>
     <div class="form-add-container">
-      <div class="head-lapor">
-        <img class="head-background " ng-src="{{picture}}">
-          <div class="overlay-white">
-          </div>
-          <button class="button icon-button camera-button" ng-click="takePhoto()">
-            <span class="ion-ios-camera-outline">
-            </span>
-          </button>
-        </img>
-      </div>
       <div class="list">
         <label class="item item-input item-select">
           <div class="input-label">
             Donasi
           </div>
-          <select ng-model="data.need">
-            <option selected>Masker</option>
-            <option>Obat-obatan</option>
-            <option>Makanan</option>
+          <select ng-model="data.need_id">
+            <option ng-repeat="need in needs" value="{{need.id}}">{{need.name}}</option>
           </select>
         </label>
         <label class="item item-input item-stacked-label">
@@ -36,10 +24,8 @@
           <div class="input-label">
             Organisasi
           </div>
-          <select ng-model="data.org">
-            <option selected>Organisasi 1</option>
-            <option>Organisasi 2</option>
-            <option>Organisasi 3</option>
+          <select ng-model="data.org_id">
+            <option ng-repeat="org in orgs" value="{{org.id}}">{{org.name}}</option>
           </select>
         </label>
       </div>

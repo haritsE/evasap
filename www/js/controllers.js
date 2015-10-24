@@ -246,62 +246,30 @@ angular.module('versinfocus.controllers', ['ionic'])
 
 .controller('SupplyCtrl', function ($scope, $http, FBURL, MapInit, $cordovaCamera) {
   $scope.data = {};
-  MapInit.init($scope);
-
-  $scope.marker = {
-    id: 1,
-    coords: {
-      latitude: -6.2398054,
-      longitude: 106.8113921
-    },
-    options: { draggable: true },
-    events: {
-      dragend: function (marker, eventName, args) {
-        var lat = marker.getPosition().lat();
-        var lon = marker.getPosition().lng();
-        $scope.data.latitude = lat;
-        $scope.data.longitude = lon;
-      }
+  $http.get(FBURL + "/organizations.json").success(function(result){
+    var list = [];
+    for(key in result){
+      if(!result[key]) continue;
+      result[key].id = key;
+      list.push(result[key])
     }
-  };
+    $scope.orgs = list;
+  });
 
-  MapInit.currentLocation($scope, function (coords) {
-    console.log(coords);
-    // $scope.$apply(function () {
-      $scope.marker.coords = coords;
-      $scope.map.center = coords;
-      $scope.data.latitude = coords.latitude;
-      $scope.data.longitude = coords.longitude;
-    
-    // });
+  $http.get(FBURL + "/needs.json").success(function(result){
+    var list = [];
+    for(key in result){
+      if(!result[key]) continue;
+      result[key].id = key;
+      list.push(result[key])
+    }
+    $scope.needs = list;
   });
 
   $scope.submit = function () {
-    $http.post(FBURL + '/victims/.json', $scope.data)
+    $http.post(FBURL + '/supplies.json', $scope.data)
       .success(function() {
         alert('success');
       });
-  }
-
-  $scope.takePhoto = function() {
-    var options = {
-      quality: 80,
-      destinationType: Camera.DestinationType.DATA_URL,
-      sourceType: Camera.PictureSourceType.CAMERA,
-      allowEdit: true,
-      encodingType: Camera.EncodingType.JPEG,
-      targetWidth: 500,
-      targetHeight: 360,
-      popoverOptions: CameraPopoverOptions,
-      saveToPhotoAlbum: true,
-      correctOrientation:true
-    };
-
-    $cordovaCamera.getPicture(options).then(function (imageData) {
-      alert('beres');
-      $scope.picture = "data:image/jpeg;base64," + imageData;
-    }, function(err) {
-      alert('error');
-    });
   }
 });
