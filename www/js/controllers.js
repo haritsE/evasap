@@ -49,8 +49,6 @@ angular.module('versinfocus.controllers', ['ionic'])
     }
   });
 
-  $scope.activeMenu = 'app.home';
-
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
     $scope.activeMenu = toState.name;
   });
@@ -66,12 +64,12 @@ angular.module('versinfocus.controllers', ['ionic'])
   $scope.auth.$onAuth(function(authData) {
     console.log(authData);
     if (authData) {
-      $state.go('app.home');
+      $state.go('tab.victim-map');
     }
   });
 
   $scope.login = function() {
-    $state.go('app.home');
+    $state.go('tab.victim-map');
   }
 
   $scope.succeed = function(authData) {
