@@ -85,11 +85,11 @@ angular.module('versinfocus', [
       'tab-victim-map': {
         templateUrl: 'templates/victim-map.html',
         controller: 'VictimMapCtrl',
-        // resolve: {
-        //   currentAuth: function(Auth) {
-        //     return Auth.$waitForAuth();
-        //   },
-        // },
+        resolve: {
+          currentAuth: function(Auth) {
+            return Auth.$waitForAuth();
+          },
+        },
       }
     }
   });

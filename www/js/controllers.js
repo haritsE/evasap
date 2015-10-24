@@ -64,12 +64,12 @@ angular.module('versinfocus.controllers', ['ionic'])
   $scope.auth.$onAuth(function(authData) {
     console.log(authData);
     if (authData) {
-      $state.go('tab.victim-map');
+      $state.go('tab.victimMap');
     }
   });
 
   $scope.login = function() {
-    $state.go('tab.victim-map');
+    $state.go('tab.victimMap');
   }
 
   $scope.succeed = function(authData) {
@@ -81,7 +81,7 @@ angular.module('versinfocus.controllers', ['ionic'])
         name: AuthHelper.getName(authData),
         picture: AuthHelper.getPicture(authData)
       });
-      $state.go('busintime.getbus');
+      $state.go('tab.victimMap');
     }
   }
 
