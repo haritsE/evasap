@@ -101,7 +101,7 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 })
 
-.service('MapInit', function ($cordovaGeolocation, $ionicSideMenuDelegate) {
+.service('MapInit', function ($cordovaGeolocation, $ionicSideMenuDelegate, $cordovaGeolocation) {
   var self = this;
   self.init = function($scope) {
     $ionicSideMenuDelegate.canDragContent(false);
@@ -119,17 +119,72 @@ angular.module('versinfocus.controllers', ['ionic'])
       zoomControl: true
     };
   }
+
+  self.currentLocation = function ($scope, callback) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var coords = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        }
+        console.log(coords);
+        callback(coords);
+      });
+    }
+    if ($cordovaGeolocation) {
+      var posOptions = {timeout: 10000, enableHighAccuracy: false};
+      $cordovaGeolocation
+        .getCurrentPosition(posOptions)
+        .then(function (position) {
+          var coords = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          }
+          callback(coords);
+        }, function(err) {
+          // error
+        });
+    }
+  }
 })
 
-.controller('VictimsCtrl', function ($scope, $state, $stateParams, MapInit) {
-  
-  $scope.markets = [];
-
+.controller('VictimMapCtrl', function ($scope, $http, FBURL, $state, $stateParams, MapInit) {
   MapInit.init($scope);
+  MapInit.currentLocation($scope, function (coords) {
+    $scope.map.center = coords;
+  });
 
+  var victims = []; 
+  var alertColor = "yellow";
+  $http.get(FBURL + "/victims.json").success(function(result){
+      for(key in result){
+        if(!result[key]) continue;
+
+        if(result[key].status == "Gejala"){
+          alertColor = "yellow";
+        } else if(result[key].status == "Parah"){
+          alertColor = "orange";
+        } else if(result[key].status == "Kritis"){
+          alertColor = "red";
+        }
+
+        victims.push({
+          id: key,
+          coords: {
+            latitude: parseFloat(result[key].latitude),
+            longitude: parseFloat(result[key].longitude)
+          },
+          options: { draggable: false },
+          data: result[key],
+          alertColor: alertColor,
+        });
+      }
+      
+      $scope.victims = victims;
+  })
 })
 
-.controller('LaporCtrl', function ($scope, $http, FBURL, MapInit, $cordovaCamera, $cordovaGeolocation) {
+.controller('LaporCtrl', function ($scope, $http, FBURL, MapInit, $cordovaCamera) {
   $scope.data = {};
   MapInit.init($scope);
 
@@ -150,39 +205,16 @@ angular.module('versinfocus.controllers', ['ionic'])
     }
   };
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      var coords = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      }
-      console.log(coords);
+  MapInit.currentLocation($scope, function (coords) {
+    console.log(coords);
+    // $scope.$apply(function () {
       $scope.marker.coords = coords;
       $scope.map.center = coords;
       $scope.data.latitude = coords.latitude;
       $scope.data.longitude = coords.longitude;
-    });
-  } 
-  if ($cordovaGeolocation) {
-    var posOptions = {timeout: 10000, enableHighAccuracy: false};
-    $cordovaGeolocation
-      .getCurrentPosition(posOptions)
-      .then(function (position) {
-        console.log(position);
-        alert('masuk 2');
-        var coords = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        }
-        console.log(coords);
-        $scope.marker.coords = coords;
-        $scope.map.center = coords;
-        $scope.data.latitude = coords.latitude;
-        $scope.data.longitude = coords.longitude;
-      }, function(err) {
-        // error
-      });
-  }
+    
+    // });
+  });
 
   $scope.submit = function () {
     $http.post(FBURL + '/victims/.json', $scope.data)

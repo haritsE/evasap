@@ -73,12 +73,12 @@ angular.module('versinfocus', [
     }
   })
 
-  .state('tab.victims', {
-    url: "/victims",
+  .state('tab.victimMap', {
+    url: "/victim-map",
     views: {
-      'tab-victims': {
-        templateUrl: 'templates/victims.html',
-        controller: 'VictimsCtrl',
+      'tab-victim-map': {
+        templateUrl: 'templates/victim-map.html',
+        controller: 'VictimMapCtrl',
         // resolve: {
         //   currentAuth: function(Auth) {
         //     return Auth.$waitForAuth();
@@ -89,5 +89,5 @@ angular.module('versinfocus', [
   });
   
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/victims');
+  $urlRouterProvider.otherwise('/tab/victim-map');
 });
