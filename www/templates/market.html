@@ -1,5 +1,6 @@
 <ion-view view-title="Peta Kebutuhan">
-  <ion-content class='content-fullscreen' scroll="false">
+  <ion-content scroll="false">
+  <h1></h1>
     <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" >
       <ui-gmap-marker 
           ng-repeat="market in markets" 
@@ -7,6 +8,9 @@
           idkey="market.id" 
           options="market.options"
           icon="'http://localhost/evasap/www/img/help.png'">
+            <ui-gmap-window options="windowOptions" closeClick="closeClick()">
+                <div>{{title}}</div>
+            </ui-gmap-window>
       </ui-gmap-marker>
 		</ui-gmap-google-map>
   </ion-content>

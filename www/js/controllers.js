@@ -256,26 +256,22 @@ angular.module('versinfocus.controllers', ['ionic'])
     zoomControl: true
   };
 
-  var warnings = []; 
-  $http.get(FBURL + "/needs.json").success(function(result){
-      console.log(result);
-      for(var i = 0; i < result.length; i++){
-        if(i > 0){
-          warnings.push({
-            id: i,
-            coords: {
-              latitude: parseFloat(result[i].latitude),
-              longitude: parseFloat(result[i].longitude)
-            },
-            options: { draggable: false },
-          })
-        }
-      } 
-      console.log("All warnings: ");
-      console.log(warnings);
+  var victims = []; 
+  $http.get(FBURL + "/victims.json").success(function(result){
+      for(key in result){
+        if(!result[key]) continue;
+        victims.push({
+          id: key,
+          coords: {
+            latitude: parseFloat(result[key].latitude),
+            longitude: parseFloat(result[key].longitude)
+          },
+          options: { draggable: false }
+        });
+      }
   });
 
-  $scope.markets = warnings;
+  $scope.markets = victims;
 
   $scope.test = {
     forceToMarket : function(){
