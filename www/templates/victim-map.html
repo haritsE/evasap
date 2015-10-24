@@ -10,7 +10,7 @@
             icon="'img/help-' + victim.alertColor + '.png'">
               <ui-gmap-window options="windowOptions" closeClick="closeClick()">
                 <div>
-                  <p ng-show="victim.data.photo"><img ng-src="{{victim.data.photo}}" width="150px"/></p>
+                  <p ng-show="victim.data.photo != ''"><img ng-src="{{victim.data.photo}}" width="150px"/></p>
                   <p><b>Nama:</b> {{victim.data.name}}</p>
                   <p><b>Status:</b> {{victim.data.status}} <i class="ion-alert-circled alert-{{victim.alertColor}}"></i></p>
                   <p><a href="#/lapor" class="button button-small button-positive">Detail</a></p>
