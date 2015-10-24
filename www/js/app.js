@@ -33,7 +33,9 @@ angular.module('versinfocus', [
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+
+  $ionicConfigProvider.views.maxCache(0);
   $stateProvider
 
   .state('app', {
@@ -61,6 +63,12 @@ angular.module('versinfocus', [
     url: '/lapor',
     templateUrl: 'templates/lapor.html',
     controller: 'LaporCtrl',
+  })
+
+  .state('victim', {
+    url: '/victim/:id',
+    templateUrl: 'templates/victim.html',
+    controller: 'VictimCtrl',
   })
 
   .state('supply', {
