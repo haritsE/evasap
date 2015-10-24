@@ -69,6 +69,18 @@ angular.module('versinfocus', [
     controller: 'SupplyCtrl',
   })
 
+  .state('organization', {
+    url: '/organization',
+    templateUrl: 'templates/organization.html',
+    controller: 'OrganizationCtrl'
+  })
+
+  .state('hazeMap', {
+    url: '/haze-map',
+    templateUrl: 'templates/haze-map.html',
+    controller: 'HazeMapCtrl'
+  })
+
   .state('helpMap', {
     url: "/help-map",
     views: {

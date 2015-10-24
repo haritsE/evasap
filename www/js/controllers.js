@@ -244,7 +244,7 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 })
 
-.controller('SupplyCtrl', function ($scope, $http, FBURL, MapInit, $cordovaCamera) {
+.controller('SupplyCtrl', function ($scope, $http, FBURL) {
   $scope.data = {};
   $http.get(FBURL + "/organizations.json").success(function(result){
     var list = [];
@@ -269,7 +269,59 @@ angular.module('versinfocus.controllers', ['ionic'])
   $scope.submit = function () {
     $http.post(FBURL + '/supplies.json', $scope.data)
       .success(function() {
-        alert('success');
+        alert('Success');
+      });
+
+    console.log($scope.data.need_id);
+
+    $http.get(FBURL + '/needs/' + $scope.data.need_id + '.json').success(function(result){
+      result.supply = parseInt(result.supply) + parseInt($scope.data.quantity);
+      $http.put(FBURL + '/needs/' + $scope.data.need_id + '.json', result);
+    });
+  }
+})
+
+.controller('OrganizationCtrl', function ($scope, $http, FBURL) {
+  $scope.data = {};
+  $scope.submit = function () {
+    $http.post(FBURL + '/organizations.json', $scope.data)
+      .success(function() {
+        alert('Success');
       });
   }
+})
+
+.controller('HazeMapCtrl', function ($scope, $http, FBURL, MapInit) {
+  MapInit.init($scope);
+  MapInit.currentLocation($scope, function (coords) {
+    $scope.map.center = coords;
+  });
+
+  var hazes = []; 
+  $http.get(FBURL + "/victims.json").success(function(result){
+      for(key in result){
+        if(!result[key]) continue;
+
+        if(result[key].status == "Gejala"){
+          alertColor = "yellow";
+        } else if(result[key].status == "Parah"){
+          alertColor = "orange";
+        } else if(result[key].status == "Kritis"){
+          alertColor = "red";
+        }
+
+        victims.push({
+          id: key,
+          coords: {
+            latitude: parseFloat(result[key].latitude),
+            longitude: parseFloat(result[key].longitude)
+          },
+          options: { draggable: false },
+          data: result[key],
+          alertColor: alertColor,
+        });
+      }
+      
+      $scope.victims = victims;
+  })
 });
