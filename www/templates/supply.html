@@ -1,0 +1,53 @@
+<ion-view>
+  <ion-header-bar align-title="left" class="bar-positive">
+    <div class="buttons">
+      <button class="button button-icon icon ion-ios-arrow-back" ng-click="back()"></button>
+    </div>
+    <h1 class="title">Bantu Korban</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="form-add-container">
+      <div class="head-lapor">
+        <img class="head-background " ng-src="{{picture}}">
+          <div class="overlay-white">
+          </div>
+          <button class="button icon-button camera-button" ng-click="takePhoto()">
+            <span class="ion-ios-camera-outline">
+            </span>
+          </button>
+        </img>
+      </div>
+      <div class="list">
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Donasi
+          </div>
+          <select ng-model="data.need">
+            <option selected>Masker</option>
+            <option>Obat-obatan</option>
+            <option>Makanan</option>
+          </select>
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class='input-label'>Jumlah</span>
+          <input ng-model="data.quantity" type="text" placeholder="Masukkan Jumlah Barang">
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Organisasi
+          </div>
+          <select ng-model="data.org">
+            <option selected>Organisasi 1</option>
+            <option>Organisasi 2</option>
+            <option>Organisasi 3</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </ion-content>
+  <ion-footer-bar class="bar-stable bar-point bar bar-footer">
+    <a ng-click="submit()" class="button button-full button-energized button-footer" target="_blank">
+      Kirim
+    </a>
+  </ion-footer-bar>
+</ion-view>

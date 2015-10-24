@@ -63,6 +63,12 @@ angular.module('versinfocus', [
     controller: 'LaporCtrl',
   })
 
+  .state('supply', {
+    url: '/supply',
+    templateUrl: 'templates/supply.html',
+    controller: 'SupplyCtrl',
+  })
+
   .state('helpMap', {
     url: "/help-map",
     views: {
