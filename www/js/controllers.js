@@ -131,6 +131,19 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 })
 
+.service('Helper', function () {
+  var self = this;
+  self.flattenArray = function(data) {
+    var list = [];
+    for(key in data){
+      if(!data[key]) continue;
+      data[key].id = key;
+      list.push(data[key]);
+    }
+    return list;
+  };
+})
+
 .controller('VictimMapCtrl', function ($scope, $http, FBURL, $state, $stateParams, MapInit, $firebaseObject) {
   MapInit.init($scope);
   MapInit.currentLocation($scope, function (coords) {
@@ -173,7 +186,6 @@ angular.module('versinfocus.controllers', ['ionic'])
   var unwatch = $firebaseObject(ref.child('victims')).$watch(function() {
     $scope.loadData();
   });
-
   $scope.$on('destroy', function() {
     unwatch();
   });
@@ -336,43 +348,53 @@ angular.module('versinfocus.controllers', ['ionic'])
 })
 
 
-.controller('HazeMapCtrl', function ($scope, $http, FBURL, MapInit) {
+.controller('HazeMapCtrl', function ($scope, $http, FBURL, MapInit, $firebaseObject) {
   MapInit.init($scope);
   MapInit.currentLocation($scope, function (coords) {
     $scope.map.center = coords;
   });
 
   var detectors = []; 
-  $http.get(FBURL + "/smoke-network.json").success(function(result){
-      for(key in result){
-        if(!result[key]) continue;
-        result[key].latestDate = moment.unix(result[key].latestTimestamp).locale('id').format("dddd, MMMM Do YYYY, h:mm:ss a");
-        $scope.severityLevel = 1;
-        if(result[key].latestValue < 500){
-          $scope.severityLevel = 2;
-        } else if(result[key].latestValue < 750){
-          $scope.severityLevel = 3;
-        } else if(result[key].latestValue < 1024){
-          $scope.severityLevel = 4;
-        }
+  $scope.loadData = function() {
+    $http.get(FBURL + "/smoke-network.json").success(function(result){
+        for(key in result){
+          if(!result[key]) continue;
+          result[key].latestDate = moment.unix(result[key].latestTimestamp).locale('id').format("dddd, MMMM Do YYYY, h:mm:ss a");
+          $scope.severityLevel = 1;
+          if(result[key].latestValue < 500){
+            $scope.severityLevel = 2;
+          } else if(result[key].latestValue < 750){
+            $scope.severityLevel = 3;
+          } else if(result[key].latestValue < 1024){
+            $scope.severityLevel = 4;
+          }
 
-        if(result[key].latestDate)
-        detectors.push({
-          id: key,
-          coords: {
-            latitude: parseFloat(result[key].latitude),
-            longitude: parseFloat(result[key].longitude)
-          },
-          options: { draggable: false },
-          data: result[key]
-        });
-      }
-      
-      $scope.detectors = detectors;
-  })
+          if(result[key].latestDate)
+          detectors.push({
+            id: key,
+            coords: {
+              latitude: parseFloat(result[key].latitude),
+              longitude: parseFloat(result[key].longitude)
+            },
+            options: { draggable: false },
+            data: result[key]
+          });
+        }
+        
+        $scope.detectors = detectors;
+    })
+  };
+  $scope.loadData();
+  var ref = new Firebase(FBURL);
+  var unwatch = $firebaseObject(ref.child('smoke-network')).$watch(function() {
+    $scope.loadData();
+  });
+  $scope.$on('destroy', function() {
+    unwatch();
+  });
 })
 
-.controller('VictimCtrl', function ($scope, $stateParams, $http, FBURL, MapInit) {
+.controller('VictimCtrl', function ($scope, $stateParams, $http, FBURL, MapInit, Helper) {
   MapInit.init($scope);
   $scope.back = function() {
     window.history.back();
@@ -381,13 +403,8 @@ angular.module('versinfocus.controllers', ['ionic'])
     id: 1,
     options: { draggable: false },
   };
-  $http.get(FBURL + "/needs.json").success(function(needs){
-    var list = [];
-    for(key in needs){
-      if(!needs[key]) continue;
-      needs[key].id = key;
-      list.push(needs[key]);
-    }
+  $http.get(FBURL + "/needs.json").success(function (needs){
+    var list = Helper.flattenArray(needs);
     $http.get(FBURL + "/victims/" + $stateParams.id + ".json").success(function(result){
       $scope.data = result;
       $scope.data.need = _.findWhere(list, {id: $scope.data.need_id});
@@ -398,5 +415,30 @@ angular.module('versinfocus.controllers', ['ionic'])
       $scope.marker.coords = coords;
       $scope.map.center = coords;
     })
+  });
+})
+
+.controller('NeedsCtrl', function ($scope, $http, FBURL, Helper, $firebaseObject) {
+  $scope.knobOptions = {
+    width: 45,
+    fgColor: "#ff0",
+    thickness: .2,
+    displayPrevious: true
+  };
+  $scope.loadData = function() {
+    $http.get(FBURL + '/needs.json').success(function (needs) {
+      $scope.needs = _.map(Helper.flattenArray(needs), function (item) {
+        item.percent = parseInt(item.supply) / parseInt(item.demand) * 100;
+        return item;
+      });
+    });
+  };
+  $scope.loadData();
+  var ref = new Firebase(FBURL);
+  var unwatch = $firebaseObject(ref.child('needs')).$watch(function() {
+    $scope.loadData();
+  });
+  $scope.$on('destroy', function() {
+    unwatch();
   });
 });

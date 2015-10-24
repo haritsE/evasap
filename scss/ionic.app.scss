@@ -338,7 +338,7 @@ $picture-list-height : 140px;
 }
 
 .logo-pazar {
-  width: 220px;
+  width: 180px;
   margin: 80px auto 50px auto;
 
   img {
@@ -536,7 +536,7 @@ button.button-icon.round-overlay-button {
 
 .head-lapor {
     position:relative;
-    height:150px;
+    height:220px;
 }
 
 .head-background{
@@ -544,7 +544,6 @@ button.button-icon.round-overlay-button {
     top: 0;
     left: 0;
     height: 100%;
-    width: 100%;
 }
 
 .overlay-white{
@@ -564,7 +563,7 @@ button.button-icon.round-overlay-button {
   display: block;
   margin-right: auto;
   margin-left: auto;
-  top:50px;
+  top:80px;
 }
 
 .secret-button {
@@ -609,5 +608,15 @@ button.button-icon.round-overlay-button {
 #small-map {
   .angular-google-map-container {
     height: 150px;
+  }
+}
+
+.list {
+  .stat {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
   }
 }

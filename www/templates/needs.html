@@ -1,0 +1,14 @@
+<ion-view view-title="Statistik Kebutuhan">
+  <ion-content>
+    <div class="list">
+        <a class="item item-avatar" href="#" ng-repeat="need in needs">
+          <img ng-src="{{need.icon}}">
+          <h2>{{need.name}}</h2>
+          <p>{{need.supply}} / {{need.demand}}</p>
+          <div class="stat">
+              <knob knob-data="need.percent" konb-options="{step: 0.01, angleOffset:-125, angleArc:250, width:120, height:120, displayPrevious:true, displayInput: true}"></knob>
+          </div>
+        </a>
+    </div>
+  </ion-content>
+</ion-view>

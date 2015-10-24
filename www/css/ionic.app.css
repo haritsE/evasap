@@ -9364,7 +9364,7 @@ fader {
   background: #bf3c2c; }
 
 .logo-pazar {
-  width: 220px;
+  width: 180px;
   margin: 80px auto 50px auto; }
   .logo-pazar img {
     width: 100%; }
@@ -9742,14 +9742,13 @@ button.button-icon.round-overlay-button {
 
 .head-lapor {
   position: relative;
-  height: 150px; }
+  height: 220px; }
 
 .head-background {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%; }
+  height: 100%; }
 
 .overlay-white {
   background-color: #fff;
@@ -9767,7 +9766,7 @@ button.button-icon.round-overlay-button {
   display: block;
   margin-right: auto;
   margin-left: auto;
-  top: 50px; }
+  top: 80px; }
 
 .secret-button {
   width: 100%;
@@ -9801,3 +9800,10 @@ button.button-icon.round-overlay-button {
 
 #small-map .angular-google-map-container {
   height: 150px; }
+
+.list .stat {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  right: 5px;
+  top: 5px; }

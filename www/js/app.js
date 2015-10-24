@@ -14,7 +14,8 @@ angular.module('versinfocus', [
   'ngStorage',
   'ngCordova',
   'highcharts-ng',
-  'uiGmapgoogle-maps'
+  'uiGmapgoogle-maps',
+  'ui.knob'
 ])
 
 .constant('FBURL', 'https://bantu-asap.firebaseio.com')
@@ -125,6 +126,21 @@ angular.module('versinfocus', [
             return Auth.$waitForAuth();
           },
         },
+      }
+    }
+  })
+
+  .state('tab.needs', {
+    url: '/needs',
+    views: {
+      'tab-needs': {
+        templateUrl: 'templates/needs.html',
+        controller: 'NeedsCtrl',
+        resolve: {
+          currentAuth: function (Auth) {
+            return Auth.$waitForAuth();
+          }
+        }
       }
     }
   });
