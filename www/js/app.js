@@ -17,7 +17,7 @@ angular.module('versinfocus', [
   'uiGmapgoogle-maps'
 ])
 
-.constant('FBURL', 'https://pazar.firebaseio.com')
+.constant('FBURL', 'https://bantu-asap.firebaseio.com')
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
