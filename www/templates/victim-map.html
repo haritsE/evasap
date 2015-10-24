@@ -3,13 +3,16 @@
   <h1></h1>
     <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" >
       <ui-gmap-marker 
-          ng-repeat="market in markets" 
-          coords="market.coords" 
-          idkey="market.id" 
-          options="market.options"
+          ng-repeat="victim in victims" 
+          coords="victim.coords" 
+          idkey="victim.id" 
+          options="victim.options"
           icon="'http://localhost/evasap/www/img/help.png'">
             <ui-gmap-window options="windowOptions" closeClick="closeClick()">
-                <div>{{title}}</div>
+                <div>
+                  <p><b>Nama:</b> {{victim.data.name}}</p>
+                  <p><b>Status:</b> {{victim.data.status}} <i class="ion-alert-circled alert-{{victim.alertColor}}"></i></p>
+                </div>
             </ui-gmap-window>
       </ui-gmap-marker>
 		</ui-gmap-google-map>

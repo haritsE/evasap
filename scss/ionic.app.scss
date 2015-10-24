@@ -24,23 +24,23 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
-// Include font
-@font-face {
-    font-family: "GothamBold";
-    src: url('../fonts/GothamRnd-Bold.otf')  format('opentype');
-    font-weight: 100;
-    font-style: bold;
-}
+// // Include font
+// @font-face {
+//     font-family: "GothamBold";
+//     src: url('../fonts/GothamRnd-Bold.otf')  format('opentype');
+//     font-weight: 100;
+//     font-style: bold;
+// }
 
-@font-face {
-    font-family: "GothamMedium";
-    src: url('../fonts/GothamRnd-Medium.otf')  format('opentype');
-    font-weight: 100;
-    font-style: normal;
-}
+// @font-face {
+//     font-family: "GothamMedium";
+//     src: url('../fonts/GothamRnd-Medium.otf')  format('opentype');
+//     font-weight: 100;
+//     font-style: normal;
+// }
 
 h1, h2, h3, h4, h5, .title {
-    font-family: "GothamBold", "HelveticaNeue", "Arial";
+    // font-family: "GothamBold", "HelveticaNeue", "Arial";
     font-weight: 100;
 }
 
@@ -57,9 +57,9 @@ fader {
 $bar-height: 230px;
 
 
-.scroll-content.has-header {
-  top: 60px;
-}
+// .scroll-content.has-header {
+//   top: 60px;
+// }
 .verse-sidemenu {
 
     .scroll-content.has-menu {
@@ -95,19 +95,19 @@ $bar-height: 230px;
           .profile-name {
             display: block;
             text-align: center;
-            font-family: 'GothamBold';
+            // font-family: 'GothamBold';
             color: $energized;
             font-size: 1.2em;
           }
           .profile-location {
             text-align: center;
-            font-family: 'GothamMedium';
+            // font-family: 'GothamMedium';
             color: $energized;
           }
         }
     }
     .large-menu {
-        font-family: "GothamMedium", "HelveticaNeue", "Arial";
+        // font-family: "GothamMedium", "HelveticaNeue", "Arial";
         font-weight: 100;
         a {
           font-size: 1em;
@@ -152,7 +152,7 @@ $picture-list-height : 140px;
       height: $picture-list-height ;
       // line-height: $picture-list-height - 20px;
       text-align: center;
-      font-family: "GothamMedium", "HelveticaNeue", "Arial";
+      // font-family: "GothamMedium", "HelveticaNeue", "Arial";
       font-size: 2em;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -193,39 +193,6 @@ $picture-list-height : 140px;
   }
 }
 
-.verse {
-
-  background: #f1f0f5;
-
-  .caption {
-    text-align: center;
-    background: #fff;
-    font-family: "GothanBold", "HelveticaNeue", "Arial";
-    font-size: 1.7em;
-    padding: 20px;
-
-
-  }
-
-  .description {
-    padding: 20px;
-
-    .body {
-      background: #fff;
-      border-radius: 5px;
-      padding: 15px;
-      text-align: justify;
-      h2 {
-        font-size: 1.5em;
-      }
-      img {
-        width: 100%;
-      }
-    }
-  }
-
-}
-
 .icon-heart {
   font-size: 2.2em;
   position: absolute;
@@ -240,7 +207,6 @@ $picture-list-height : 140px;
   padding: 15px;
 
 }
-
 .bar.bar-footer.bar-red {
 
   padding: 0;
@@ -284,7 +250,7 @@ $picture-list-height : 140px;
   margin-bottom: 0 !important;
   width: 100%;
   line-height: 60px !important;
-  font-family: 'GothamBold';
+  // font-family: 'GothamBold';
   font-size: 1.3em !important;
 
 }
@@ -302,11 +268,11 @@ $picture-list-height : 140px;
 }
 
 .bar-header {
-  height: 60px;
+  // height: 60px;
 
   .button {
     padding: 3px 15px !important;
-    color: $energized !important;
+    // color: $energized !important;
     &.button-active:after {
       position: absolute;
       top: -6px;
@@ -319,11 +285,7 @@ $picture-list-height : 140px;
   }
 }
 
-.title {
-  display: none;
-}
-
-.angular-google-map { height: 93.5vh; }
+// .angular-google-map { height: 93.5vh; }
 .angular-google-map-container { height: 93.5vh; }
 
 .content-fullscreen {
@@ -359,7 +321,7 @@ $picture-list-height : 140px;
   line-height: 20px;
   color: #fff !important;
   font-size: 1em;
-  font-family: 'GothamMedium', 'Arial';
+  // font-family: 'GothamMedium', 'Arial';
 
   i {
     font-size: 1.5em;
@@ -376,8 +338,8 @@ $picture-list-height : 140px;
 }
 
 .logo-pazar {
-  width: 250px;
-  margin: 100px auto 50px auto;
+  width: 220px;
+  margin: 80px auto 50px auto;
 
   img {
     width: 100%;
@@ -425,11 +387,11 @@ $picture-list-height : 140px;
     text-align: center;
   }
 }
-.sub-title {
-  text-align:center;
-  padding-left:5px;
-  padding-right:5px;
-}
+// .sub-title {
+//   text-align:center;
+//   padding-left:5px;
+//   padding-right:5px;
+// }
 
 .verified-market {
   background-color: #BF3C2C;
@@ -590,7 +552,7 @@ button.button-icon.round-overlay-button {
     position: absolute;
     width: 100%;
     height: 100%;
-    opacity: 0.8;
+    opacity: 0.2;
 }
 
 .camera-button {
@@ -642,4 +604,10 @@ button.button-icon.round-overlay-button {
 .chart-commodity {
   height: 250px;
   width: 100%;
+}
+
+#small-map {
+  .angular-google-map-container {
+    height: 150px;
+  }
 }

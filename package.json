@@ -15,7 +15,14 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-    "com.ionic.keyboard"
+    "com.ionic.keyboard",
+    "cordova-plugin-console",
+    "cordova-plugin-device",
+    "cordova-plugin-inappbrowser",
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-whitelist",
+    "org.apache.cordova.camera",
+    "org.apache.cordova.geolocation"
   ],
   "cordovaPlatforms": [
     "android"

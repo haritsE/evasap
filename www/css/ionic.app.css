@@ -9163,20 +9163,7 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-@font-face {
-  font-family: "GothamBold";
-  src: url("../fonts/GothamRnd-Bold.otf") format("opentype");
-  font-weight: 100;
-  font-style: bold; }
-
-@font-face {
-  font-family: "GothamMedium";
-  src: url("../fonts/GothamRnd-Medium.otf") format("opentype");
-  font-weight: 100;
-  font-style: normal; }
-
 h1, h2, h3, h4, h5, .title {
-  font-family: "GothamBold", "HelveticaNeue", "Arial";
   font-weight: 100; }
 
 fader {
@@ -9187,9 +9174,6 @@ fader {
   background: rgba(0, 0, 0, 0.1);
   opacity: 0;
   z-index: -1; }
-
-.scroll-content.has-header {
-  top: 60px; }
 
 .verse-sidemenu .scroll-content.has-menu {
   top: 230px; }
@@ -9218,16 +9202,13 @@ fader {
     .verse-sidemenu .bar-menu .profile .profile-name {
       display: block;
       text-align: center;
-      font-family: 'GothamBold';
       color: #bf3c2c;
       font-size: 1.2em; }
     .verse-sidemenu .bar-menu .profile .profile-location {
       text-align: center;
-      font-family: 'GothamMedium';
       color: #bf3c2c; }
 
 .verse-sidemenu .large-menu {
-  font-family: "GothamMedium", "HelveticaNeue", "Arial";
   font-weight: 100;
   box-sizing: border-box; }
   .verse-sidemenu .large-menu a {
@@ -9255,7 +9236,6 @@ fader {
     padding: 10px;
     height: 140px;
     text-align: center;
-    font-family: "GothamMedium", "HelveticaNeue", "Arial";
     font-size: 2em;
     text-transform: uppercase;
     letter-spacing: 1px; }
@@ -9276,26 +9256,6 @@ fader {
 
 .full-image {
   width: 100%; }
-
-.verse {
-  background: #f1f0f5; }
-  .verse .caption {
-    text-align: center;
-    background: #fff;
-    font-family: "GothanBold", "HelveticaNeue", "Arial";
-    font-size: 1.7em;
-    padding: 20px; }
-  .verse .description {
-    padding: 20px; }
-    .verse .description .body {
-      background: #fff;
-      border-radius: 5px;
-      padding: 15px;
-      text-align: justify; }
-      .verse .description .body h2 {
-        font-size: 1.5em; }
-      .verse .description .body img {
-        width: 100%; }
 
 .icon-heart {
   font-size: 2.2em;
@@ -9341,7 +9301,6 @@ fader {
   margin-bottom: 0 !important;
   width: 100%;
   line-height: 60px !important;
-  font-family: 'GothamBold';
   font-size: 1.3em !important; }
 
 .pane, .view {
@@ -9355,25 +9314,16 @@ fader {
   background-color: #fff;
   overflow: hidden; }
 
-.bar-header {
-  height: 60px; }
-  .bar-header .button {
-    padding: 3px 15px !important;
-    color: #bf3c2c !important; }
-    .bar-header .button.button-active:after {
-      position: absolute;
-      top: -6px;
-      right: -6px;
-      bottom: -13px;
-      left: -6px;
-      content: ' ';
-      border-bottom: 4px solid #bf3c2c; }
-
-.title {
-  display: none; }
-
-.angular-google-map {
-  height: 93.5vh; }
+.bar-header .button {
+  padding: 3px 15px !important; }
+  .bar-header .button.button-active:after {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    bottom: -13px;
+    left: -6px;
+    content: ' ';
+    border-bottom: 4px solid #bf3c2c; }
 
 .angular-google-map-container {
   height: 93.5vh; }
@@ -9405,8 +9355,7 @@ fader {
   border-radius: 0;
   line-height: 20px;
   color: #fff !important;
-  font-size: 1em;
-  font-family: 'GothamMedium', 'Arial'; }
+  font-size: 1em; }
   .button-custom i {
     font-size: 1.5em;
     margin-right: 10px; }
@@ -9418,8 +9367,8 @@ fader {
   background: #bf3c2c; }
 
 .logo-pazar {
-  width: 250px;
-  margin: 100px auto 50px auto; }
+  width: 220px;
+  margin: 80px auto 50px auto; }
   .logo-pazar img {
     width: 100%; }
 
@@ -9452,11 +9401,6 @@ fader {
   .search-top input {
     width: 100%;
     text-align: center; }
-
-.sub-title {
-  text-align: center;
-  padding-left: 5px;
-  padding-right: 5px; }
 
 .verified-market {
   background-color: #BF3C2C;
@@ -9815,7 +9759,7 @@ button.button-icon.round-overlay-button {
   position: absolute;
   width: 100%;
   height: 100%;
-  opacity: 0.8; }
+  opacity: 0.2; }
 
 .camera-button {
   border-radius: 50%;
@@ -9857,3 +9801,6 @@ button.button-icon.round-overlay-button {
 .chart-commodity {
   height: 250px;
   width: 100%; }
+
+#small-map .angular-google-map-container {
+  height: 150px; }
