@@ -477,13 +477,19 @@ angular.module('versinfocus.controllers', ['ionic'])
 })
 
 .controller('KontribusiCtrl', function($scope, $stateParams) {
-  
+
 })
 
 .controller('PencapaianCtrl', function($scope, $stateParams) {
 })
 
-.controller('BantuanCtrl', function($scope, $stateParams) {
+.controller('BantuanCtrl', function($scope, $http, FBURL, $stateParams) {
+  $http.get(FBURL + "/donations.json").success(function(result){
+    $scope.donations = result;    
+    for(var key in result){
+      console.log(result[key]);
+    }
+  });
 })
 
 .controller('ShareCtrl', function($scope, $stateParams) {
