@@ -125,7 +125,7 @@ angular.module('versinfocus.controllers', ['ionic'])
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         }
-        console.log(coords);
+        // console.log(coords);
         callback(coords);
       });
     }
@@ -204,7 +204,7 @@ angular.module('versinfocus.controllers', ['ionic'])
   };
 
   MapInit.currentLocation($scope, function (coords) {
-    console.log(coords);
+    // console.log(coords);
     // $scope.$apply(function () {
       $scope.marker.coords = coords;
       $scope.map.center = coords;
@@ -272,7 +272,7 @@ angular.module('versinfocus.controllers', ['ionic'])
         alert('Success');
       });
 
-    console.log($scope.data.need_id);
+    // console.log($scope.data.need_id);
 
     $http.get(FBURL + '/needs/' + $scope.data.need_id + '.json').success(function(result){
       result.supply = parseInt(result.supply) + parseInt($scope.data.quantity);
@@ -297,31 +297,22 @@ angular.module('versinfocus.controllers', ['ionic'])
     $scope.map.center = coords;
   });
 
-  var hazes = []; 
-  $http.get(FBURL + "/victims.json").success(function(result){
+  var detectors = []; 
+  $http.get(FBURL + "/smoke-network.json").success(function(result){
       for(key in result){
         if(!result[key]) continue;
-
-        if(result[key].status == "Gejala"){
-          alertColor = "yellow";
-        } else if(result[key].status == "Parah"){
-          alertColor = "orange";
-        } else if(result[key].status == "Kritis"){
-          alertColor = "red";
-        }
-
-        victims.push({
+        result[key].latestDate = moment.unix(result[key].latestTimestamp).locale('id').format("dddd, MMMM Do YYYY, h:mm:ss a");
+        detectors.push({
           id: key,
           coords: {
             latitude: parseFloat(result[key].latitude),
             longitude: parseFloat(result[key].longitude)
           },
           options: { draggable: false },
-          data: result[key],
-          alertColor: alertColor,
+          data: result[key]
         });
       }
       
-      $scope.victims = victims;
+      $scope.detectors = detectors;
   })
 });

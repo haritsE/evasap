@@ -75,10 +75,19 @@ angular.module('versinfocus', [
     controller: 'OrganizationCtrl'
   })
 
-  .state('hazeMap', {
+  .state('tab.hazeMap', {
     url: '/haze-map',
-    templateUrl: 'templates/haze-map.html',
-    controller: 'HazeMapCtrl'
+    views: {
+      'tab-haze-map': {
+        templateUrl: 'templates/haze-map.html',
+        controller: 'HazeMapCtrl',
+        resolve: {
+          currentAuth: function(Auth) {
+            return Auth.$waitForAuth();
+          },
+        },
+      }
+    }
   })
 
   .state('helpMap', {
