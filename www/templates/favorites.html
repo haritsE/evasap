@@ -1,0 +1,19 @@
+<ion-view view-title="Favorites" class="verse">
+  
+  <ion-content>
+    <ion-list class="picture-list devotion">
+      <ion-item ng-repeat="devotion in devotions" href="#/app/verse/{{devotion.id}}" style="background: url({{devotion.custom_fields['3colmediaSplashImg_value'][0]}}) no-repeat; background-size: cover; background-position: center">
+        <div class="fader">
+          {{devotion.title}}
+          <!-- {{moments(devotion.date).format('YYYY MMM D')}} -->
+          <div time number="devotion.date" format="'MMMM D YYYY'" class="time">
+            
+          </div>
+        </div>
+        <ion-option-button class="button-assertive button-small-width" ng-click="confirmDelete(devotion)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

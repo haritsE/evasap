@@ -1,0 +1,645 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
+$energized:                       #bf3c2c !default;
+$light-green:                     #2ecc71 !default;
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";
+
+// Include font
+@font-face {
+    font-family: "GothamBold";
+    src: url('../fonts/GothamRnd-Bold.otf')  format('opentype');
+    font-weight: 100;
+    font-style: bold;
+}
+
+@font-face {
+    font-family: "GothamMedium";
+    src: url('../fonts/GothamRnd-Medium.otf')  format('opentype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+h1, h2, h3, h4, h5, .title {
+    font-family: "GothamBold", "HelveticaNeue", "Arial";
+    font-weight: 100;
+}
+
+fader {
+  position: absolute;
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,.1);
+  opacity: 0;
+  z-index: -1;
+}
+
+$bar-height: 230px;
+
+
+.scroll-content.has-header {
+  top: 60px;
+}
+.verse-sidemenu {
+
+    .scroll-content.has-menu {
+        top: $bar-height;
+    }
+
+    .bar-menu {
+        height: $bar-height;
+        border-color: #ececec !important;
+        .logo-header {
+            background: url('../img/logo-header.png') no-repeat;
+            width: 264px;
+            height: 60px;
+            background-size: contain;
+        }
+        .profile {
+          width: 100%;
+
+          .profile-picture {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            display: block;
+            img {
+              width: 100%;
+            }
+          }
+
+          .profile-name {
+            display: block;
+            text-align: center;
+            font-family: 'GothamBold';
+            color: $energized;
+            font-size: 1.2em;
+          }
+          .profile-location {
+            text-align: center;
+            font-family: 'GothamMedium';
+            color: $energized;
+          }
+        }
+    }
+    .large-menu {
+        font-family: "GothamMedium", "HelveticaNeue", "Arial";
+        font-weight: 100;
+        a {
+          font-size: 1em;
+          color: $energized;
+        }
+        .item {
+          border-color: #fafafa;
+          span {
+            line-height: 40px;
+            margin-left: 10px;
+          }
+
+          .item-content {
+            padding: 10px 10px 10px 20px;
+          }
+        }
+        img.icon {
+            width: 40px;
+            height: 40px;
+            float: left;
+        }
+        box-sizing: border-box;
+    }
+}
+
+.profile-point {
+
+}
+
+$picture-list-height : 140px;
+.picture-list {
+
+  .item {
+    height: $picture-list-height ;
+    color: #fff;
+    background: #000;
+    border: none !important;
+
+    .item-content {
+      background: inherit;
+      padding: 10px;
+      height: $picture-list-height ;
+      // line-height: $picture-list-height - 20px;
+      text-align: center;
+      font-family: "GothamMedium", "HelveticaNeue", "Arial";
+      font-size: 2em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .item-content {
+      padding: 0 !important;
+
+      .fader {
+        background: rgba(0,0,0,.4);
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        position: relative;
+
+        .time {
+          position: absolute;
+          bottom: -10px;
+          font-size: .6em;
+          width: 100%;
+        }
+      }
+      font-size: 1.2em;
+    }
+  }
+
+  &.devotion {
+
+  }
+}
+
+.full-image {
+  width: 100%;
+}
+
+.title {
+  small {
+  }
+}
+
+.verse {
+
+  background: #f1f0f5;
+
+  .caption {
+    text-align: center;
+    background: #fff;
+    font-family: "GothanBold", "HelveticaNeue", "Arial";
+    font-size: 1.7em;
+    padding: 20px;
+
+
+  }
+
+  .description {
+    padding: 20px;
+
+    .body {
+      background: #fff;
+      border-radius: 5px;
+      padding: 15px;
+      text-align: justify;
+      h2 {
+        font-size: 1.5em;
+      }
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+}
+
+.icon-heart {
+  font-size: 2.2em;
+  position: absolute;
+  height: 60px;
+  width: 60px;
+  text-align: center;
+  top: 10px;
+  right: 10px;
+  color: #fff;
+  background: rgba(0,0,0,.3);
+  border-radius: 50%;
+  padding: 15px;
+
+}
+
+.bar.bar-footer.bar-red {
+
+  padding: 0;
+  background: transparent;
+
+  .row {
+    padding: 0;
+     .col {
+        padding: 0;
+
+        .button.button-block, .button.button-full  {
+          margin-top: 0 !important;
+          margin-bottom: 0 !important;
+          height: 45px;
+          opacity: .95;
+        }
+     }
+  }
+
+}
+
+.item-wrap {
+  position: relative;
+  margin-bottom: -5px;
+}
+
+.list.year {
+  margin-bottom: 0;
+}
+
+.bar.bar-energized {
+  padding: 0;
+}
+
+.bar-point {
+  height: 60px;
+}
+
+.button-footer {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  width: 100%;
+  line-height: 60px !important;
+  font-family: 'GothamBold';
+  font-size: 1.3em !important;
+
+}
+
+.pane, .view {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: inherit;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.bar-header {
+  height: 60px;
+
+  .button {
+    padding: 3px 15px !important;
+    color: $energized !important;
+    &.button-active:after {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      bottom: -13px;
+      left: -6px;
+      content: ' ';
+      border-bottom: 4px solid $energized;
+    }
+  }
+}
+
+.title {
+  display: none;
+}
+
+.angular-google-map { height: 93.5vh; }
+.angular-google-map-container { height: 93.5vh; }
+
+.content-fullscreen {
+  .scroll { height: 100%;}
+  .angular-google-map { height: 100%; }
+  .angular-google-map-container {height: 100vh;}
+}
+
+.input-search {
+  right: 0;
+}
+
+.commodity {
+  position: absolute;
+  bottom: 10px;
+  text-align: left;
+  left: 10px;
+
+  .commodity-name {
+
+  }
+  .commodity-price {
+    font-size: 1.4em;
+    span {
+      font-size: 1rem;
+    }
+  }
+}
+
+.button-custom {
+  border: none;
+  border-radius: 0;
+  line-height: 20px;
+  color: #fff !important;
+  font-size: 1em;
+  font-family: 'GothamMedium', 'Arial';
+
+  i {
+    font-size: 1.5em;
+    margin-right: 10px;
+  }
+}
+
+.button-facebook {
+  background: #4e558e;
+}
+
+.button-google {
+  background: #bf3c2c;
+}
+
+.logo-pazar {
+  width: 300px;
+  margin: 100px auto 120px auto;
+
+  img {
+    width: 100%;
+  }
+}
+
+.full-picture {
+  background: url('../img/splash.jpg') no-repeat;
+  background-size: cover;
+}
+
+.login {
+  height: 100vh;
+  .login-button {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+  }
+}
+
+
+.search-top {
+  margin-bottom: 0px !important;
+  .placeholder-icon {
+    margin-right: 0px;
+    margin-left: auto;
+  }
+  ::-webkit-input-placeholder {
+     text-align: center;
+  }
+
+  :-moz-placeholder { /* Firefox 18- */
+     text-align: center;
+  }
+
+  ::-moz-placeholder {  /* Firefox 19+ */
+     text-align: center;
+  }
+
+  :-ms-input-placeholder {
+     text-align: center;
+  }
+  input {
+    width:100%;
+    text-align: center;
+  }
+}
+.sub-title {
+  text-align:center;
+  padding-left:5px;
+  padding-right:5px;
+}
+
+.verified-market {
+  background-color: #BF3C2C;
+  padding: 5px 10px;
+  p {
+    margin-bottom:2px;
+    color: #fff !important;
+    font-size:1.1em;
+  }
+  h4 {
+    color:#fff !important;
+    margin-bottom:2px;
+  }
+  h3 {
+    color:#fff !important;
+    margin-bottom:2px;
+    margin-top:2px;
+  }
+}
+
+.arrow-up {
+  color: $energized;
+}
+
+.arrow-down {
+  color: $light-green;
+}
+
+@import "scss/timeline";
+
+body {
+  cursor: url('http://ionicframework.com/img/finger.png'), auto;
+}
+
+$disabledText:                    rgba(black, 0.26) !default;
+$material-shadow:                0 2px 10px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.26) !default;
+$material-shadow-pressed:        0 6px 20px 0 rgba(0, 0, 0, 0.19), 0 8px 17px 0 rgba(0, 0, 0, 0.2) !default;
+$floating-button-size: 56px;
+$floating-button-small-size: 40px;
+
+button.button-icon.round-overlay-button {
+  position: absolute;
+  height: $floating-button-size;
+  width: $floating-button-size;
+  border-radius: 50%;
+  min-height: $floating-button-size;
+  padding: 0;
+  border: none;
+
+  background-color: $energized;
+  color: white;
+
+  box-shadow: $material-shadow;
+  transition: all linear 220ms;
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+
+  &.energized {
+    background-color: $energized;
+    color: white;
+
+    &.activated {
+      background-color: darken($energized, 15%);
+    }
+  }
+
+  &.assertive {
+    background-color: #BF3C2C;
+    color: white;
+
+    &.activated {
+      background-color: darken(#BF3C2C, 15%);
+    }
+  }
+
+  &.positive {
+    background-color: $positive;
+    color: white;
+
+    &.activated {
+      background-color: darken($positive, 15%);
+    }
+  }
+
+  &.stable {
+    background-color: $disabledText;
+    color: $disabledText;
+
+    &.activated {
+      background-color: darken($disabledText, 15%);
+    }
+  }
+
+  &.icon {
+    &:before {
+      font-size: 24px;
+    }
+  }
+
+  &.small {
+    height: $floating-button-small-size;
+    width: $floating-button-small-size;
+    min-height: 40px;
+    padding: 0;
+    border: none;
+
+    &.icon {
+      &:before {
+        line-height: 40px;
+      }
+    }
+  }
+
+  &.activated {
+    opacity: 1;
+    box-shadow: $material-shadow-pressed;
+  }
+
+  &.left {
+    left: 1px;
+    top: 16px;
+  }
+
+  &.bottom-edge-right {
+    bottom: -24px;
+    right: 16px;
+    z-index: 12;
+  }
+
+  &.bottom-right {
+    bottom: 0;
+    margin-bottom: 16px;
+    right: 16px;
+    z-index: 10;
+
+    &.slide-down {
+      transform: translate3d(0,88px,0);
+    }
+
+  }
+}
+
+.head-lapor {
+    position:relative;
+    height:150px;
+}
+
+.head-background{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.overlay-white{
+    background-color: #fff;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+
+.camera-button {
+  border-radius: 50%;
+  font-size: 2em;
+  height: 50px;
+  width: 50px;
+  background-color:#Fff;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  top:50px;
+}
+
+.secret-button {
+  width: 100%;
+  height: 50px;
+  opacity: 0;
+}
+
+.share-group {
+  padding-left:10px;
+  padding-right:10px;
+  padding-top:20px;
+  text-align:center;
+  p {
+    font-size:1.2em;
+  }
+  h2 {
+    color: #BF3C2C;
+  }
+}
+
+.achievement {
+    .profile {
+        width: 35px;
+        height: 35px;
+        position: absolute;
+        left: 10px;
+        img {
+            width: 100%;
+            border-radius: 50%;
+        }
+        .h3 {
+          color: #BF3C2C !important;
+        }
+    }
+}
+.chart-commodity {
+  height: 250px;
+  width: 100%;
+}

@@ -1,0 +1,36 @@
+<ion-view view-title="{{verse.date | dateDay}}" class="verse">
+  
+  <ion-content>
+    <div class="item-wrap">
+        <a href ng-click="like()">
+            <i class="icon-heart ion-ios-heart-outline" ng-show="!isLike"></i>
+            <i class="icon-heart ion-ios-heart" ng-show="isLike"></i>
+        </a>
+        <img ng-src="{{verse.custom_fields['3colmediaSplashImg_value'][0]}}" alt="" class="full-image">
+    </div>
+    <div class="caption">
+        {{verse.title}}
+    </div>
+    <div class="description">
+        <div class="body">
+            <div ng-bind-html="verse.content"></div>
+        </div>
+    </div>
+    
+  </ion-content>
+</ion-view>
+
+<div class="bar bar-footer bar-red">
+    <div class="row">
+        <!-- <div class="col">
+            <button class="button button-full button-energized">
+              Download
+            </button>    
+        </div> -->
+        <div class="col">
+            <button class="button button-full button-energized" ng-click="share()">
+              Share
+            </button>
+        </div>
+    </div>
+</div>
