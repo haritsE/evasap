@@ -83,6 +83,12 @@ angular.module('versinfocus', [
     controller: 'OrganizationCtrl'
   })
 
+  .state('tips', {
+    url: '/tips',
+    templateUrl: 'templates/tips.html',
+    controller: 'TipsCtrl'
+  })
+
   .state('tab.hazeMap', {
     url: '/haze-map',
     views: {

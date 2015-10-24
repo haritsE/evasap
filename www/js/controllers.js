@@ -322,6 +322,24 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 })
 
+
+.controller('TipsCtrl', function ($scope, $http, FBURL) {
+  $scope.data = {};
+  $http.get(FBURL + '/articles.json').success(function(result){
+    var list = [];
+    for(key in result){
+      if(!result[key]) continue;
+      result[key].id = key;
+      list.push(result[key])
+    }
+    $scope.articles = list;
+  });
+  $scope.back = function() {
+    window.history.back();
+  }
+})
+
+
 .controller('HazeMapCtrl', function ($scope, $http, FBURL, MapInit) {
   MapInit.init($scope);
   MapInit.currentLocation($scope, function (coords) {
