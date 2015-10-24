@@ -41,11 +41,11 @@ angular.module('versinfocus', [
     abstract: true,
     templateUrl: "templates/menu.html",
     controller: 'AppCtrl',
-    resolve: {
+    /*resolve: {
       currentAuth: function(Auth) {
         return Auth.$waitForAuth();
       },
-    },
+    },*/
   })
 
   .state('login', {
@@ -60,6 +60,16 @@ angular.module('versinfocus', [
       'menuContent': {
         templateUrl: "templates/home.html",
         controller: 'HomeCtrl'
+      }
+    }
+  })
+
+  .state('helpMap', {
+    url: "/help-map",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/help-map.html",
+        controller: 'HelpMapCtrl'
       }
     }
   })
@@ -84,83 +94,6 @@ angular.module('versinfocus', [
     }
   })
 
-  .state('app.verse', {
-    url: "/verse/:id",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/verse.html",
-        controller: 'VerseCtrl'
-      }
-    }
-  })
-
-  .state('app.devotions', {
-    url: "/devotions/:month/:year",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/devotions.html",
-        controller: 'DevotionsCtrl'
-      }
-    }
-  })
-
-  .state('app.favorites', {
-    url: "/favorites",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/favorites.html",
-        controller: 'FavoritesCtrl'
-      }
-    }
-  })
-
-  .state('app.help', {
-    url: "/help",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/help.html"
-      }
-    }
-  })
-
-  .state('app.browse', {
-    url: "/browse",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/browse.html"
-      }
-    }
-  })
-
-  .state('app.timeline', {
-    url: "/timeline",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/timeline.html",
-        controller: 'TimelineCtrl'
-      }
-    }
-  })
-
-    .state('app.playlists', {
-      url: "/playlists",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/playlists.html",
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
-
-  .state('app.single', {
-    url: "/playlists/:playlistId",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/playlist.html",
-        controller: 'PlaylistCtrl'
-      }
-    }
-  })
   .state('app.market', {
     url: "/market",
     views: {

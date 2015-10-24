@@ -219,6 +219,7 @@ angular.module('versinfocus.controllers', ['ionic'])
     //   });
     // }, function(error) {
     //   console.log("ERROR: " + error);
+    console.log("CLICKED!!!!!");
       Auth.$authWithOAuthPopup("facebook").then($scope.succeed).catch(function(error) {
         console.log("Authentication failed:", error);
       });
@@ -239,11 +240,11 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 })
 
-.controller('MarketCtrl', function($scope, $state, $stateParams, $ionicSideMenuDelegate) {
+.controller('MarketCtrl', function($scope, $http, FBURL, $state, $stateParams, $ionicSideMenuDelegate) {
   $ionicSideMenuDelegate.canDragContent(false);
-  var lat  = '-6.2398054';
-  var long = '106.8113921';
-  $scope.map = {center: {latitude: lat, longitude: long }, zoom: 16 };
+  var lat  = '-6.8734910';
+  var lon = '107.5844920';
+  $scope.map = {center: {latitude: lat, longitude: lon }, zoom: 17 };
   $scope.options = {
     scrollwheel: false,
     overviewMapControl: false,
@@ -254,33 +255,31 @@ angular.module('versinfocus.controllers', ['ionic'])
     streetViewControl: false,
     zoomControl: true
   };
-  $scope.markets = [{
-    id: 1,
-    coords: {
-      latitude: -6.2398054,
-      longitude: 106.8113921
-    },
-    options: { draggable: false },
-  },{
-    id: 2,
-    coords: {
-      latitude: -6.2398054,
-      longitude: 106.8114000
-    },
-    options: { draggable: false },
-  },{
-    id: 3,
-    coords: {
-      latitude: -6.2430470,
-      longitude: 106.8247076
-    },
-    options: { draggable: false },
-  }];
+
+  var warnings = []; 
+  $http.get(FBURL + "/needs.json").success(function(result){
+      console.log(result);
+      for(var i = 0; i < result.length; i++){
+        if(i > 0){
+          warnings.push({
+            id: i,
+            coords: {
+              latitude: parseFloat(result[i].latitude),
+              longitude: parseFloat(result[i].longitude)
+            },
+            options: { draggable: false },
+          })
+        }
+      } 
+      console.log("All warnings: ");
+      console.log(warnings);
+  });
+
+  $scope.markets = warnings;
 
   $scope.test = {
     forceToMarket : function(){
-    console.log("HEHE");
-    $state.go('app.marketSingle');
+      $state.go('app.marketSingle');
   }}
 })
 
@@ -478,6 +477,7 @@ angular.module('versinfocus.controllers', ['ionic'])
 })
 
 .controller('KontribusiCtrl', function($scope, $stateParams) {
+  
 })
 
 .controller('PencapaianCtrl', function($scope, $stateParams) {
@@ -487,6 +487,10 @@ angular.module('versinfocus.controllers', ['ionic'])
 })
 
 .controller('ShareCtrl', function($scope, $stateParams) {
+
+})
+
+.controller('HelpMapCtrl', function($scope, ArchiveImage, Commodities, $ionicPopover) {
 
 })
 
