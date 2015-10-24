@@ -49,9 +49,10 @@ angular.module('versinfocus', [
     controller: 'LoginCtrl'
   })
 
-  ///
+  /// 
   .state('tab', {
     url: "/tab",
+    controller: 'AppCtrl',
     abstract: true,
     templateUrl: 'templates/tabs.html'
   })
@@ -60,6 +61,7 @@ angular.module('versinfocus', [
     url: '/lapor',
     templateUrl: 'templates/lapor.html',
     controller: 'LaporCtrl',
+  })
 
   .state('helpMap', {
     url: "/help-map",
@@ -71,16 +73,21 @@ angular.module('versinfocus', [
     }
   })
 
-  .state('app.market', {
-    url: "/market",
+  .state('tab.victims', {
+    url: "/victims",
     views: {
-      'menuContent': {
-        templateUrl: "templates/market.html",
-        controller: 'MarketCtrl'
+      'tab-victims': {
+        templateUrl: 'templates/victims.html',
+        controller: 'VictimsCtrl',
+        // resolve: {
+        //   currentAuth: function(Auth) {
+        //     return Auth.$waitForAuth();
+        //   },
+        // },
       }
     }
   });
   
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/lapor');
+  $urlRouterProvider.otherwise('/tab/victims');
 });

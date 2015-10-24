@@ -23,6 +23,11 @@ angular.module('versinfocus.controllers', ['ionic'])
     $ionicSideMenuDelegate.toggleLeft(true);
   };
 
+  setTimeout(function () {
+    $scope.openMenu();
+  });
+  
+
   $scope.logout = function() {
     $scope.auth.$unauth();
   };
@@ -116,13 +121,15 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 })
 
-.controller('MarketCtrl', function($scope, $state, $stateParams, $ionicSideMenuDelegate) {
+.controller('VictimsCtrl', function ($scope, $state, $stateParams, MapInit) {
   
   $scope.markets = [];
 
+  MapInit.init($scope);
+
 })
 
-.controller('LaporCtrl', function ($scope, $http, FBURL, $ionicSideMenuDelegate, MapInit, $cordovaCamera, $cordovaGeolocation) {
+.controller('LaporCtrl', function ($scope, $http, FBURL, MapInit, $cordovaCamera, $cordovaGeolocation) {
   $scope.data = {};
   MapInit.init($scope);
 

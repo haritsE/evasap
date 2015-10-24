@@ -1,21 +1,89 @@
-<!--
-Create tabs with an icon and label, using the tabs-positive style.
-Each tab's child <ion-nav-view> directive will have its own
-navigation history that also transitions its views in and out.
--->
-<ion-tabs class="tabs-color-active-positive tabs-icon-only">
-  <!-- Account Tab -->
-  <ion-tab title="Timeline" icon-off="ion-ios-home" icon-on="ion-ios-home" href="#/tab/home">
-    <ion-nav-view name="tab-home"></ion-nav-view>
-  </ion-tab>
+<ion-side-menus enable-menu-with-back-views="true" class="verse-sidemenu" side="right">
+  <fader ng-click="openMenu()"></fader>
 
-  <ion-tab  title="Create Devo" icon-off="ion-ios-plus-empty" icon-on="ion-ios-plus-empty" href="#/tab/create">
-    <ion-nav-view name="tab-create"></ion-nav-view>
-  </ion-tab>
+  <ion-side-menu side="left" width="{{width}}">
+    <ion-nav-bar>
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+      <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-android-more-vertical" ng-click="popover.show($event)" menu-toggle="left" menu-close>
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
 
-  <ion-tab  title="Browse" icon-off="ion-ios-people-outline" icon-on="ion-ios-people-outline" href="#/tab/browse">
-    <ion-nav-view name="tab-browse"></ion-nav-view>
-  </ion-tab>
+    <!--
+    Create tabs with an icon and label, using the tabs-positive style.
+    Each tab's child <ion-nav-view> directive will have its own
+    navigation history that also transitions its views in and out.
+    -->
+    <ion-tabs class="tabs-color-active-positive tabs-icon-only">
+      <!-- Account Tab -->
+      <ion-tab title="Timeline" icon-off="ion-android-walk" icon-on="ion-android-walk" href="#/tab/victims">
+        <ion-nav-view name="tab-victims"></ion-nav-view>
+      </ion-tab>
+
+      <ion-tab  title="Create Devo" icon-off="ion-android-archive" icon-on="ion-android-archive" href="#/tab/needs">
+        <ion-nav-view name="tab-needs"></ion-nav-view>
+      </ion-tab>
+
+      <ion-tab  title="Browse" icon-off="ion-cloud" icon-on="ion-cloud" href="#/tab/smokes">
+        <ion-nav-view name="tab-smokes"></ion-nav-view>
+      </ion-tab>
+
+    </ion-tabs>
+  </ion-side-menu>
+
+  <ion-side-menu-content style="width:80%; box-shadow: 0px 0px 50px rgba(0,0,0,.5); z-index: 999999999999999">
+    <ion-header-bar class="bar-light bar-menu">
+      <div class="profile">
+        <div class="profile-picture">
+          <img ng-src="{{authHelper.getPicture(authData)}}" alt="">
+        </div>
+        <div class="profile-name">
+          {{authHelper.getName(authData)}}
+        </div>
+        <div class="profile-location">
+          Bandung, Indonesia
+        </div>
+      </div>
+    </ion-header-bar>
+
+    <ion-content class="has-footer has-menu">
+      <ion-list class="large-menu">
+        <ion-item href="#/app/kontribusi" ng-click="openMenu()">
+          <img src="img/icon-devotion.png" alt="" class="icon">
+          <span>Kontribusiku</span>
+        </ion-item>
+        <ion-item href="#/app/pencapaian" ng-click="openMenu()">
+          <img src="img/icon-archive.png" alt="" class="icon">
+          <span>Pencapaian</span>
+        </ion-item>
+        <ion-item href="#/app/share" ng-click="openMenu()">
+          <img src="img/icon-favorite.png" alt="" class="icon">
+          <span>Berbagi Ke Teman</span>
+        </ion-item>
+        <ion-item href="#/app/bantuan" ng-click="openMenu()">
+          <img src="img/icon-help.png" alt="" class="icon">
+          <span>Bantuan</span>
+        </ion-item>
+        <ion-item href="#" ng-click="logout()">
+          <img src="img/icon-help.png" alt="" class="icon">
+          <span>Logout</span>
+        </ion-item>
+        <!-- <ion-item href="#" ng-click="openMenu()">
+          <img src="img/icon-setting.png" alt="" class="icon">
+          <span>Settings</span>
+        </ion-item> -->
+      </ion-list>
+    </ion-content>
+    <ion-footer-bar class="bar-energized bar-point">
+      <!-- <h1 class="title">Subscribe Now</h1> -->
+      <a href="http://warungsatekamu.org/" class="button button-full button-energized button-footer" target="_blank">
+        5000 poin
+      </a>
+    </ion-footer-bar>
+  </ion-side-menu-content>
+</ion-side-menus>
 
 
-</ion-tabs>
+
