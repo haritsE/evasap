@@ -41,11 +41,6 @@ angular.module('versinfocus', [
     abstract: true,
     templateUrl: "templates/menu.html",
     controller: 'AppCtrl',
-    resolve: {
-      currentAuth: function(Auth) {
-        return Auth.$waitForAuth();
-      },
-    },
   })
 
   .state('login', {
@@ -55,7 +50,6 @@ angular.module('versinfocus', [
   })
 
   ///
-
   .state('tab', {
     url: "/tab",
     abstract: true,
@@ -66,6 +60,25 @@ angular.module('versinfocus', [
     url: '/lapor',
     templateUrl: 'templates/lapor.html',
     controller: 'LaporCtrl',
+
+  .state('helpMap', {
+    url: "/help-map",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/help-map.html",
+        controller: 'HelpMapCtrl'
+      }
+    }
+  })
+
+  .state('app.market', {
+    url: "/market",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/market.html",
+        controller: 'MarketCtrl'
+      }
+    }
   });
   
   // if none of the above states are matched, use this as the fallback

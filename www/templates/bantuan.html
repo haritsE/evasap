@@ -1,5 +1,20 @@
 <ion-view view-title="Playlist">
   <ion-content>
     <h1>Bantuan</h1>
+    <hr>
+    <div ng-repeat="donation in donations">
+    	<div ng-if="donation">
+	    	<h2>{{donation.title}}</h2>
+	    	<div>{{donation.description}}</div>
+	    	<div ng-if="donation.account_number">
+	    		<h4>Informasi Rekening</h4>
+				<p>Nama Bank: {{donation.bank_name}}</p>
+	    		<p>Nomor Rekening: {{donation.account_number}}</p>
+				<p>Atas nama: {{donation.account_owner}}</p>
+			</div>
+	    	<p>Sumber: {{donation.source}}</p>
+		<hr/>
+		</div>
+	</div>
   </ion-content>
 </ion-view>

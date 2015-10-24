@@ -50,10 +50,6 @@ angular.module('versinfocus.controllers', ['ionic'])
     $scope.activeMenu = toState.name;
   });
 
-  // ionic.on('resize',function() {
-  //   ionic.off('resize',null,window);
-  //   self.positionView(target,modalEl);
-  // },window);
 })
 
 .controller('HomeCtrl', function($scope, ArchiveImage, Commodities, $ionicPopover) {
@@ -87,29 +83,16 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 
   $scope.facebook = function() {
-    // $cordovaOauth.facebook(FB_APP_ID, ["email"]).then(function(result) {
-    //   Auth.$authWithOAuthToken("facebook", result.access_token).then($scope.succeed, function(error) {
-    //     console.error("ERROR: " + error);
-    //   });
-    // }, function(error) {
-    //   console.log("ERROR: " + error);
+    console.log("CLICKED!!!!!");
       Auth.$authWithOAuthPopup("facebook").then($scope.succeed).catch(function(error) {
         console.log("Authentication failed:", error);
       });
-    // });
   }
 
   $scope.google = function() {
-    // $cordovaOauth.google(GOOGLE_APP_ID, ["email"]).then(function(result) {
-    //   Auth.$authWithOAuthToken("google", result.access_token).then($scope.succeed, function(error) {
-    //     console.error("ERROR: " + error);
-    //   });
-    // }, function(error) {
-      // console.log("ERROR: " + error);
       Auth.$authWithOAuthPopup("google").then($scope.succeed).catch(function(error) {
         console.log("Authentication failed:", error);
       });
-    // });
   }
 })
 
@@ -156,7 +139,6 @@ angular.module('versinfocus.controllers', ['ionic'])
         var lon = marker.getPosition().lng();
         $scope.data.latitude = lat;
         $scope.data.longitude = lon;
-        // $scope.$apply();
       }
     }
   };
@@ -224,5 +206,4 @@ angular.module('versinfocus.controllers', ['ionic'])
     });
   }
 })
-
 ;
