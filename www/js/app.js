@@ -33,7 +33,9 @@ angular.module('versinfocus', [
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+
+  $ionicConfigProvider.views.maxCache(0);
   $stateProvider
 
   .state('app', {

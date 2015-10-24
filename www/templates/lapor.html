@@ -46,6 +46,19 @@
         <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
         </ui-gmap-marker>
       </ui-gmap-google-map>
+      <div class="list">
+        <div class="item item-divider">
+          Kebutuhan
+        </div>
+        <label class="item item-input item-stacked-label">
+          <span class='input-label'>Kebutuhan</span>
+          
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class='input-label'>Jumlah</span>
+          <input ng-model="data.amount" type="number" placeholder="Masukkan Jumlah Kebutuhan">
+        </label>
+      </div>
     </div>
   </ion-content>
   <ion-footer-bar class="bar-stable bar-point bar bar-footer">

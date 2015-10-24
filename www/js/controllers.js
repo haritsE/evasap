@@ -129,24 +129,10 @@ angular.module('versinfocus.controllers', ['ionic'])
         callback(coords);
       });
     }
-    if ($cordovaGeolocation) {
-      var posOptions = {timeout: 10000, enableHighAccuracy: false};
-      $cordovaGeolocation
-        .getCurrentPosition(posOptions)
-        .then(function (position) {
-          var coords = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          }
-          callback(coords);
-        }, function(err) {
-          // error
-        });
-    }
   }
 })
 
-.controller('VictimMapCtrl', function ($scope, $http, FBURL, $state, $stateParams, MapInit) {
+.controller('VictimMapCtrl', function ($scope, $http, FBURL, $state, $stateParams, MapInit, $firebaseObject) {
   MapInit.init($scope);
   MapInit.currentLocation($scope, function (coords) {
     $scope.map.center = coords;
@@ -154,35 +140,47 @@ angular.module('versinfocus.controllers', ['ionic'])
 
   var victims = []; 
   var alertColor = "yellow";
-  $http.get(FBURL + "/victims.json").success(function(result){
-      for(key in result){
-        if(!result[key]) continue;
+  $scope.loadData = function() {
+    $http.get(FBURL + "/victims.json").success(function(result){
+        for(key in result){
+          if(!result[key]) continue;
 
-        if(result[key].status == "Gejala"){
-          alertColor = "yellow";
-        } else if(result[key].status == "Parah"){
-          alertColor = "orange";
-        } else if(result[key].status == "Kritis"){
-          alertColor = "red";
+          if(result[key].status == "Gejala"){
+            alertColor = "yellow";
+          } else if(result[key].status == "Parah"){
+            alertColor = "orange";
+          } else if(result[key].status == "Kritis"){
+            alertColor = "red";
+          }
+
+          victims.push({
+            id: key,
+            coords: {
+              latitude: parseFloat(result[key].latitude),
+              longitude: parseFloat(result[key].longitude)
+            },
+            options: { draggable: false },
+            data: result[key],
+            alertColor: alertColor,
+          });
         }
+        
+        $scope.victims = victims;
+    })
+  };
+  $scope.loadData();
 
-        victims.push({
-          id: key,
-          coords: {
-            latitude: parseFloat(result[key].latitude),
-            longitude: parseFloat(result[key].longitude)
-          },
-          options: { draggable: false },
-          data: result[key],
-          alertColor: alertColor,
-        });
-      }
-      
-      $scope.victims = victims;
-  })
+  var ref = new Firebase(FBURL);
+  var unwatch = $firebaseObject(ref.child('victims')).$watch(function() {
+    $scope.loadData();
+  });
+
+  $scope.$on('destroy', function() {
+    unwatch();
+  });
 })
 
-.controller('LaporCtrl', function ($scope, $http, FBURL, MapInit, $cordovaCamera) {
+.controller('LaporCtrl', function ($scope, $state, $http, FBURL, MapInit, $cordovaCamera) {
   $scope.data = {};
   MapInit.init($scope);
 
@@ -204,43 +202,45 @@ angular.module('versinfocus.controllers', ['ionic'])
   };
 
   MapInit.currentLocation($scope, function (coords) {
-    console.log(coords);
-    // $scope.$apply(function () {
-      $scope.marker.coords = coords;
-      $scope.map.center = coords;
-      $scope.data.latitude = coords.latitude;
-      $scope.data.longitude = coords.longitude;
-    
-    // });
+    $scope.marker.coords = coords;
+    $scope.map.center = coords;
+    $scope.data.latitude = coords.latitude;
+    $scope.data.longitude = coords.longitude;
   });
 
   $scope.submit = function () {
     $http.post(FBURL + '/victims/.json', $scope.data)
       .success(function() {
-        alert('success');
+        $state.go('tab.victimMap', {}, {reload: true});
       });
   }
 
-  $scope.takePhoto = function() {
-    var options = {
-      quality: 80,
-      destinationType: Camera.DestinationType.DATA_URL,
-      sourceType: Camera.PictureSourceType.CAMERA,
-      allowEdit: true,
-      encodingType: Camera.EncodingType.JPEG,
-      targetWidth: 500,
-      targetHeight: 360,
-      popoverOptions: CameraPopoverOptions,
-      saveToPhotoAlbum: true,
-      correctOrientation:true
-    };
+  $scope.back = function() {
+    window.history.back();
+  }
 
-    $cordovaCamera.getPicture(options).then(function (imageData) {
-      alert('beres');
-      $scope.picture = "data:image/jpeg;base64," + imageData;
-    }, function(err) {
-      alert('error');
-    });
+  $scope.takePhoto = function() {
+    if (Camera) {
+      var options = {
+        quality: 80,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: true,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 500,
+        targetHeight: 360,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: true,
+        correctOrientation:true
+      };
+
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+        
+        $scope.picture = "data:image/jpeg;base64," + imageData;
+      }, function(err) {
+        alert('error');
+      });
+    }
   }
 })
 ;
