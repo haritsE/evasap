@@ -9163,9 +9163,6 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-h1, h2, h3, h4, h5, .title {
-  font-weight: 100; }
-
 fader {
   position: absolute;
   display: block;
@@ -9209,10 +9206,10 @@ fader {
       color: #bf3c2c; }
 
 .verse-sidemenu .large-menu {
-  font-weight: 100;
+  font-weight: 500;
   box-sizing: border-box; }
   .verse-sidemenu .large-menu a {
-    font-size: 1em;
+    font-size: .9em;
     color: #bf3c2c; }
   .verse-sidemenu .large-menu .item {
     border-color: #fafafa; }
@@ -9326,7 +9323,7 @@ fader {
     border-bottom: 4px solid #bf3c2c; }
 
 .angular-google-map-container {
-  height: 93.5vh; }
+  height: 86vh; }
 
 .content-fullscreen .scroll {
   height: 100%; }

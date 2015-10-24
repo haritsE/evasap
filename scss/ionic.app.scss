@@ -41,7 +41,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 h1, h2, h3, h4, h5, .title {
     // font-family: "GothamBold", "HelveticaNeue", "Arial";
-    font-weight: 100;
+    // font-weight: 100;
 }
 
 fader {
@@ -108,9 +108,9 @@ $bar-height: 230px;
     }
     .large-menu {
         // font-family: "GothamMedium", "HelveticaNeue", "Arial";
-        font-weight: 100;
+        font-weight: 500;
         a {
-          font-size: 1em;
+          font-size: .9em;
           color: $energized;
         }
         .item {
@@ -286,7 +286,7 @@ $picture-list-height : 140px;
 }
 
 // .angular-google-map { height: 93.5vh; }
-.angular-google-map-container { height: 93.5vh; }
+.angular-google-map-container { height: 86vh; }
 
 .content-fullscreen {
   .scroll { height: 100%;}

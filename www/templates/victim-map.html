@@ -1,13 +1,12 @@
 <ion-view view-title="Peta Kebutuhan">
   <ion-content scroll="false">
-  <h1></h1>
     <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" >
       <ui-gmap-marker 
           ng-repeat="victim in victims" 
           coords="victim.coords" 
           idkey="victim.id" 
           options="victim.options"
-          icon="'http://localhost/evasap/www/img/help.png'">
+          icon="'img/help.png'">
             <ui-gmap-window options="windowOptions" closeClick="closeClick()">
               <div>
                 <p ng-show="victim.data.photo != ''"><img ng-src="{{victim.data.photo}}" width="150px"/></p>
