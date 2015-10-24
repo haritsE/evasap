@@ -1,0 +1,20 @@
+<ion-view>
+  <ion-header-bar align-title="left" class="bar-positive">
+    <div class="buttons">
+      <button class="button button-icon icon ion-ios-arrow-back" ng-click="back()"></button>
+    </div>
+    <h1 class="title">Tips & Trik</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div ng-repeat="article in articles">
+      <h2>{{article.title}}</h2>
+      <div ng-bind-html=article.content></div>
+      <p><b>Sumber:</b> {{article.source}}</p>
+    </div>
+  </ion-content>
+  <ion-footer-bar class="bar-stable bar-point bar bar-footer">
+    <a ng-click="submit()" class="button button-full button-energized button-footer" target="_blank">
+      Kirim
+    </a>
+  </ion-footer-bar>
+</ion-view>

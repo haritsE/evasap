@@ -1,5 +1,5 @@
 <ion-view view-title="Peta Kebutuhan">
-  <ion-content scroll="false" >
+  <ion-content scroll="false">
     <div data-tap-disabled="true">
       <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" >
         <ui-gmap-marker 
@@ -7,7 +7,7 @@
             coords="victim.coords" 
             idkey="victim.id" 
             options="victim.options"
-            icon="'img/help.png'">
+            icon="'img/help-' + victim.alertColor + '.png'">
               <ui-gmap-window options="windowOptions" closeClick="closeClick()">
                 <div>
                   <p ng-show="victim.data.photo != ''"><img ng-src="{{victim.data.photo}}" width="150px"/></p>

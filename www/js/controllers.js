@@ -124,7 +124,7 @@ angular.module('versinfocus.controllers', ['ionic'])
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         }
-        console.log(coords);
+        // console.log(coords);
         callback(coords);
       });
     }
@@ -296,7 +296,7 @@ angular.module('versinfocus.controllers', ['ionic'])
         alert('Success');
       });
 
-    console.log($scope.data.need_id);
+    // console.log($scope.data.need_id);
 
     $http.get(FBURL + '/needs/' + $scope.data.need_id + '.json').success(function(result){
       result.supply = parseInt(result.supply) + parseInt($scope.data.quantity);
@@ -318,38 +318,57 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 })
 
+
+.controller('TipsCtrl', function ($scope, $http, FBURL) {
+  $scope.data = {};
+  $http.get(FBURL + '/articles.json').success(function(result){
+    var list = [];
+    for(key in result){
+      if(!result[key]) continue;
+      result[key].id = key;
+      list.push(result[key])
+    }
+    $scope.articles = list;
+  });
+  $scope.back = function() {
+    window.history.back();
+  }
+})
+
+
 .controller('HazeMapCtrl', function ($scope, $http, FBURL, MapInit) {
   MapInit.init($scope);
   MapInit.currentLocation($scope, function (coords) {
     $scope.map.center = coords;
   });
 
-  var hazes = []; 
-  $http.get(FBURL + "/victims.json").success(function(result){
+  var detectors = []; 
+  $http.get(FBURL + "/smoke-network.json").success(function(result){
       for(key in result){
         if(!result[key]) continue;
-
-        if(result[key].status == "Gejala"){
-          alertColor = "yellow";
-        } else if(result[key].status == "Parah"){
-          alertColor = "orange";
-        } else if(result[key].status == "Kritis"){
-          alertColor = "red";
+        result[key].latestDate = moment.unix(result[key].latestTimestamp).locale('id').format("dddd, MMMM Do YYYY, h:mm:ss a");
+        $scope.severityLevel = 1;
+        if(result[key].latestValue < 500){
+          $scope.severityLevel = 2;
+        } else if(result[key].latestValue < 750){
+          $scope.severityLevel = 3;
+        } else if(result[key].latestValue < 1024){
+          $scope.severityLevel = 4;
         }
 
-        victims.push({
+        if(result[key].latestDate)
+        detectors.push({
           id: key,
           coords: {
             latitude: parseFloat(result[key].latitude),
             longitude: parseFloat(result[key].longitude)
           },
           options: { draggable: false },
-          data: result[key],
-          alertColor: alertColor,
+          data: result[key]
         });
       }
       
-      $scope.victims = victims;
+      $scope.detectors = detectors;
   })
 })
 
