@@ -8,38 +8,28 @@
   <ion-content>
     <div class="form-add-container">
       <div class="head-lapor">
-        <img class="head-background " ng-src="{{picture}}">
-          <div class="overlay-white">
-          </div>
-          <button class="button icon-button camera-button" ng-click="takePhoto()">
-            <span class="ion-ios-camera-outline">
-            </span>
-          </button>
+        <img class="head-background " ng-src="{{data.photo}}">
         </img>
       </div>
       <div class="list">
         <label class="item item-input item-stacked-label">
           <span class='input-label'>Nama</span>
-          <input ng-model="data.name" type="text" placeholder="Masukkan Nama">
+          <div>{{data.name}}</div>
         </label>
         <label class="item item-input item-stacked-label">
           <span class='input-label'>Umur</span>
-          <input ng-model="data.age" type="number" placeholder="Masukkan Umur">
+          <div>{{data.age}}</div>
         </label>
-        <label class="item item-input item-select">
+        <label class="item item-input item-stacked-label">
           <div class="input-label">
             Status
           </div>
-          <select ng-model="data.status">
-            <option>Gejala</option>
-            <option selected>Parah</option>
-            <option>Kritis</option>
-          </select>
+          <div>{{data.status}}</div>
         </label>
         <label class="item item-input item-stacked-label">
           <span class='input-label'>Lokasi</span>
-          <input ng-model="data.latitude" type="text" placeholder="Masukkan Latitude">
-          <input ng-model="data.longitude" type="text" placeholder="Masukkan Longitude">
+          <div>{{data.latitude}}</div>
+          <div>{{data.longitude}}</div>
         </label>
       </div>
       <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" id="small-map">
@@ -50,22 +40,19 @@
         <div class="item item-divider">
           Kebutuhan
         </div>
-        <label class="item item-input item-select">
+        <label class="item item-input item-stacked-label">
           <span class='input-label'>Kebutuhan</span>
-          <select ng-model="data.need_id">
-            <option ng-repeat="need in needs" value="{{need.id}}">{{need.name}}</option>
-          </select>
+          <div>
+            {{data.need.name}}
+          </div>
         </label>
         <label class="item item-input item-stacked-label">
           <span class='input-label'>Jumlah</span>
-          <input ng-model="data.quantity" type="number" placeholder="Masukkan Jumlah Kebutuhan">
+          <div>
+            {{data.quantity}}
+          </div>
         </label>
       </div>
     </div>
   </ion-content>
-  <ion-footer-bar class="bar-stable bar-point bar bar-footer">
-    <a ng-click="submit()" class="button button-full button-energized button-footer" target="_blank">
-      Kirim
-    </a>
-  </ion-footer-bar>
 </ion-view>

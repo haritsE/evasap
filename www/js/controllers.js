@@ -102,8 +102,8 @@ angular.module('versinfocus.controllers', ['ionic'])
   var self = this;
   self.init = function($scope) {
     $ionicSideMenuDelegate.canDragContent(false);
-    var lat  = '-6.2398054';
-    var long = '106.8113921';
+    var lat  = '-6.87043';
+    var long = '107.58673';
     $scope.map = {center: {latitude: lat, longitude: long }, zoom: 16 };
     $scope.options = {
       scrollwheel: false,
@@ -185,10 +185,6 @@ angular.module('versinfocus.controllers', ['ionic'])
 
   $scope.marker = {
     id: 1,
-    coords: {
-      latitude: -6.2398054,
-      longitude: 106.8113921
-    },
     options: { draggable: true },
     events: {
       dragend: function (marker, eventName, args) {
@@ -355,4 +351,33 @@ angular.module('versinfocus.controllers', ['ionic'])
       
       $scope.victims = victims;
   })
+})
+
+.controller('VictimCtrl', function ($scope, $stateParams, $http, FBURL, MapInit) {
+  MapInit.init($scope);
+  $scope.back = function() {
+    window.history.back();
+  }
+  $scope.marker = {
+    id: 1,
+    options: { draggable: false },
+  };
+  $http.get(FBURL + "/needs.json").success(function(needs){
+    var list = [];
+    for(key in needs){
+      if(!needs[key]) continue;
+      needs[key].id = key;
+      list.push(needs[key]);
+    }
+    $http.get(FBURL + "/victims/" + $stateParams.id + ".json").success(function(result){
+      $scope.data = result;
+      $scope.data.need = _.findWhere(list, {id: $scope.data.need_id});
+      var coords = {
+        latitude: $scope.data.latitude,
+        longitude: $scope.data.longitude
+      };
+      $scope.marker.coords = coords;
+      $scope.map.center = coords;
+    })
+  });
 });
