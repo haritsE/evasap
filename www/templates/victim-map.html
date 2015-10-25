@@ -1,17 +1,18 @@
 <ion-view view-title="Peta Kebutuhan">
   <ion-content scroll="false">
+    <div class="list" style="position: absolute; top: 0; left: 0; width: 100%">
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Tampilan
+        </div>
+        <select ng-model="filter" ng-change="changeFilter(filter)">
+         <option value="" disabled selected>Pilih Tampilan</option>
+          <option>Kebutuhan</option>
+          <option>Kesehatan</option>
+        </select>
+      </label>
+    </div>
     <div data-tap-disabled="true">
-      <div class="list" style="position: absolute; top: 0; left: 0; width: 100%">
-        <label class="item item-input item-select">
-          <div class="input-label">
-            Tampilan
-          </div>
-          <select ng-model="filter" ng-change="changeFilter(filter)">
-            <option>Kebutuhan</option>
-            <option>Kesehatan</option>
-          </select>
-        </label>
-      </div>
       <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" >
         <ui-gmap-marker 
             ng-repeat="victim in victims" 
