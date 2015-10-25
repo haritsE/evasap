@@ -359,7 +359,7 @@ angular.module('versinfocus.controllers', ['ionic'])
     $http.get(FBURL + "/smoke-network.json").success(function(result){
         for(key in result){
           if(!result[key]) continue;
-          result[key].latestDate = moment.unix(result[key].latestTimestamp).locale('id').format("dddd, MMMM Do YYYY, h:mm:ss a");
+          result[key].latestDate = moment(result[key].latestTimestamp).locale('id').format("dddd, MMMM Do YYYY, h:mm:ss a");
           $scope.severityLevel = 1;
           if(result[key].latestValue > 250){
             $scope.severityLevel = 2;
