@@ -393,9 +393,11 @@ angular.module('versinfocus.controllers', ['ionic'])
           $scope.severityLevel = 1;
           if(result[key].latestValue > 250){
             $scope.severityLevel = 2;
-          } else if(result[key].latestValue > 500){
+          }
+          if(result[key].latestValue > 500){
             $scope.severityLevel = 3;
-          } else if(result[key].latestValue > 750){
+          }
+          if(result[key].latestValue > 750){
             $scope.severityLevel = 4;
           }
 
