@@ -13,6 +13,7 @@
             Donasi
           </div>
           <select ng-model="data.need_id">
+            <option value="" disabled selected>Pilih Kebutuhan</option>
             <option ng-repeat="need in needs" value="{{need.id}}">{{need.name}}</option>
           </select>
         </label>
@@ -25,6 +26,7 @@
             Organisasi
           </div>
           <select ng-model="data.org_id">
+            <option value="" disabled selected>Pilih Organisasi</option>
             <option ng-repeat="org in orgs" value="{{org.id}}">{{org.name}}</option>
           </select>
         </label>

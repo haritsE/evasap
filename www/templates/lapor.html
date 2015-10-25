@@ -28,11 +28,12 @@
         </label>
         <label class="item item-input item-select">
           <div class="input-label">
-            Status
+            Status Kesehatan
           </div>
           <select ng-model="data.status">
+            <option value="" disabled selected>Pilih Kesehatan</option>
             <option>Gejala</option>
-            <option selected>Parah</option>
+            <option>Parah</option>
             <option>Kritis</option>
           </select>
         </label>
@@ -53,6 +54,7 @@
         <label class="item item-input item-select">
           <span class='input-label'>Kebutuhan</span>
           <select ng-model="data.need_id">
+            <option value="" disabled selected>Pilih Kebutuhan</option>
             <option ng-repeat="need in needs" value="{{need.id}}">{{need.name}}</option>
           </select>
         </label>
