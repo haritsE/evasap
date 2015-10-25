@@ -276,7 +276,7 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 })
 
-.controller('SupplyCtrl', function ($scope, $http, FBURL) {
+.controller('SupplyCtrl', function ($scope, $http, FBURL, Auth) {
   $scope.data = {};
   $http.get(FBURL + "/organizations.json").success(function(result){
     var list = [];
@@ -303,16 +303,25 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 
   $scope.submit = function () {
-    $http.post(FBURL + '/supplies.json', $scope.data)
-      .success(function() {
-        alert('Success');
+    Auth.$onAuth(function(authData) {
+      console.log(authData);
+      if (authData) {
+        $scope.data.donator_id = authData.uid;
+      } else {
+        $scope.data.donator_id = null;
+      }
+
+      $scope.data.status = "pending";
+
+      $http.post(FBURL + '/supplies.json', $scope.data)
+        .success(function() {
+          alert('Success');
+        });
+
+      $http.get(FBURL + '/needs/' + $scope.data.need_id + '.json').success(function(result){
+        result.supply = parseInt(result.supply) + parseInt($scope.data.quantity);
+        $http.put(FBURL + '/needs/' + $scope.data.need_id + '.json', result);
       });
-
-    // console.log($scope.data.need_id);
-
-    $http.get(FBURL + '/needs/' + $scope.data.need_id + '.json').success(function(result){
-      result.supply = parseInt(result.supply) + parseInt($scope.data.quantity);
-      $http.put(FBURL + '/needs/' + $scope.data.need_id + '.json', result);
     });
   }
 })
@@ -442,7 +451,7 @@ angular.module('versinfocus.controllers', ['ionic'])
   });
 })
 
-.controller('OrganizationsCtrl', function ($scope, $http, FBURL, Helper, $firebaseObject) {
+.controller('OrganizationsCtrl', function ($scope, $http, FBURL, Helper) {
   $http.get(FBURL + '/organizations.json').success(function (result) {
     var orgs = [];
     for(key in result){
@@ -452,4 +461,42 @@ angular.module('versinfocus.controllers', ['ionic'])
     }
     $scope.orgs = orgs;
   });
+})
+
+.controller('ManageDonationsCtrl', function ($scope, $http, FBURL, Helper) {
+  $http.get(FBURL + '/supplies.json').success(function (result) {
+    $http.get(FBURL + '/needs.json').success(function(needs){
+      $http.get(FBURL + '/organizations.json').success(function(orgs){
+        $http.get(FBURL + '/users.json').success(function(users){
+          var supplies = [];
+          for(key in result){
+            if(!result[key]) continue;
+            result[key].id = key;
+
+            var tmpSupply = result[key];
+
+            tmpSupply.user = _.findWhere(Helper.flattenArray(users), {id: tmpSupply.donator_id});
+            tmpSupply.need = _.findWhere(Helper.flattenArray(needs), {id: tmpSupply.need_id});
+            tmpSupply.org = _.findWhere(Helper.flattenArray(orgs), {id: tmpSupply.org_id});
+
+            console.log(tmpSupply);
+
+            supplies.push(tmpSupply);
+          }
+          $scope.supplies = supplies;
+        });
+      });
+    });
+  });
+
+
+  $scope.nextStatus = function(supply){
+    if(supply.status == "pending"){
+      supply.status = "diproses";
+    } else if(supply.status == "diproses"){
+      supply.status = "diterima";
+    }
+
+    $http.put(FBURL + "/supplies/" + supply.id + ".json", supply);
+  }
 });

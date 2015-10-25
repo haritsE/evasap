@@ -1,0 +1,21 @@
+<ion-view>
+  <ion-header-bar align-title="left" class="bar-stable">
+    <div class="buttons">
+      <button class="button button-icon icon ion-ios-arrow-back" ng-click="back()"></button>
+    </div>
+    <h1 class="title">Atur Donasi</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+        <div class="item item-avatar" href="#" ng-repeat="supply in supplies">
+          <img ng-src="{{supply.user.picture}}">
+          <h2>{{supply.user.name}}</h2>
+          <p><b>Barang Donasi</b>: {{supply.need.name}}</p>
+          <p><b>Jumlah</b>: {{supply.quantity}} buah</p>
+          <p><b>Tujuan Donasi</b>: {{supply.org.name}}</p>
+          <p><b>Status Donasi</b>: {{supply.status}}</p>
+          <a href="#" ng-show="supply.status != 'diterima'" ng-click="nextStatus(supply)" class="button button-small button-positive">{{(supply.status == "pending" ? "Proses Donasi" : "Donasi telah tersalurkan")}}</a>
+        </div>
+    </div>
+  </ion-content>
+</ion-view>
