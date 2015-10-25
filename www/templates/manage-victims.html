@@ -1,0 +1,21 @@
+<ion-view>
+  <ion-header-bar align-title="left" class="bar-stable">
+    <div class="buttons">
+      <button class="button button-icon icon ion-ios-arrow-back" ng-click="back()"></button>
+    </div>
+    <h1 class="title">Atur Korban</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+        <div class="item item-avatar" href="#" ng-repeat="victim in victims">
+          <img ng-src="{{victim.photo}}">
+          <h2>{{victim.name}}</h2>
+          <p><b>Status Kesehatan</b>: {{victim.status}}</p>
+          <p><b>Status Kebutuhan</b>: {{victim.need_status}}</p>
+          <p><b>Kebutuhan</b>: {{victim.need.name}}</p>
+          <p><b>Kuantitas</b>: {{victim.quantity}}</p>
+          <a href="#" ng-show="victim.status != 'diterima'" ng-click="nextStatus(victim)" class="button button-small button-positive">{{(victim.status == "menunggu" ? "Menunggu Bantuan" : "Donasi telah diterima korban")}}</a>
+        </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -191,7 +191,7 @@ angular.module('versinfocus.controllers', ['ionic'])
   });
 })
 
-.controller('LaporCtrl', function ($scope, $state, $http, FBURL, MapInit, $cordovaCamera) {
+.controller('LaporCtrl', function ($scope, $state, $http, FBURL, MapInit, $cordovaCamera, Auth) {
   $scope.data = {};
   MapInit.init($scope);
 
@@ -226,7 +226,8 @@ angular.module('versinfocus.controllers', ['ionic'])
   });
 
   $scope.submit = function () {
-    $http.post(FBURL + '/victims/.json', $scope.data)
+    $scope.data.need_status = "menunggu";
+    $http.post(FBURL + '/victims.json', $scope.data)
       .success(function() {
         $state.go('tab.victimMap', {}, {reload: true});
         $http.get(FBURL + '/needs/' + $scope.data.need_id + '.json').success(function(result){
@@ -498,5 +499,33 @@ angular.module('versinfocus.controllers', ['ionic'])
     }
 
     $http.put(FBURL + "/supplies/" + supply.id + ".json", supply);
+  }
+})
+
+.controller('ManageVictimsCtrl', function ($scope, $http, FBURL, Helper) {
+
+  $http.get(FBURL + "/victims.json").success(function(result){
+    $http.get(FBURL + '/needs.json').success(function(needs){
+      var victims = [];
+      for(key in result){
+        if(!result[key]) continue;
+        result[key].id = key;
+
+        var tmpVictim = result[key];
+
+        tmpVictim.need = _.findWhere(Helper.flattenArray(needs), {id: tmpVictim.need_id});
+        victims.push(tmpVictim);
+      }
+
+      $scope.victims = victims;
+    });
+  });
+
+  $scope.nextStatus = function(victim){
+    if(victim.status == "menunggu"){
+      victim.status = "terpenuhi";
+    }
+
+    $http.put(FBURL + "/victims/" + victim.id + ".json", victim);
   }
 });
