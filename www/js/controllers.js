@@ -408,7 +408,8 @@ angular.module('versinfocus.controllers', ['ionic'])
               longitude: parseFloat(result[key].longitude)
             },
             options: { draggable: false },
-            data: result[key]
+            data: result[key],
+            severityLevel: $scope.severityLevel
           });
         }
 
