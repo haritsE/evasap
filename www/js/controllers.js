@@ -562,6 +562,10 @@ angular.module('versinfocus.controllers', ['ionic'])
     });
   });
 
+  $scope.back = function() {
+    window.history.back();
+  }
+
   $scope.nextStatus = function(victim){
     if(victim.need_status == "menunggu"){
       victim.need_status = "terpenuhi";

@@ -9173,7 +9173,7 @@ fader {
   z-index: -1; }
 
 .verse-sidemenu .scroll-content.has-menu {
-  top: 230px; }
+  top: 230px !important; }
 
 .verse-sidemenu .bar-menu {
   height: 230px !important;
@@ -9184,7 +9184,9 @@ fader {
     height: 60px;
     background-size: contain; }
   .verse-sidemenu .bar-menu .profile {
-    width: 100%; }
+    width: 100%;
+    width: 264px;
+    height: 60px; }
     .verse-sidemenu .bar-menu .profile .profile-picture {
       width: 140px;
       height: 140px;
