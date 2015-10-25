@@ -143,6 +143,12 @@ angular.module('versinfocus', [
         }
       }
     }
+  })
+
+  .state('victimList', {
+    url: '/victim-list/:need_id',
+    templateUrl: 'templates/victim-list.html',
+    controller: 'VictimListCtrl'
   });
   
   // if none of the above states are matched, use this as the fallback

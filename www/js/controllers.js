@@ -441,4 +441,18 @@ angular.module('versinfocus.controllers', ['ionic'])
   $scope.$on('destroy', function() {
     unwatch();
   });
+})
+
+.controller('VictimListCtrl', function ($scope, $http, FBURL, Helper, $stateParams) {
+  $http.get(FBURL + '/needs/' + $stateParams.need_id + '.json').success(function (need) {
+    $scope.need = need;
+  });
+  $scope.back = function() {
+    window.history.back();
+  }
+  $http.get(FBURL + '/victims.json').success(function (victims) {
+    $scope.victims = _.filter(Helper.flattenArray(victims), function (item) {
+      return item.need_id == $stateParams.need_id;
+    });
+  })
 });
