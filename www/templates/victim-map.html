@@ -1,18 +1,30 @@
 <ion-view view-title="Peta Kebutuhan">
   <ion-content scroll="false">
     <div data-tap-disabled="true">
+      <div class="list" style="position: absolute; top: 0; left: 0; width: 100%">
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Tampilan
+          </div>
+          <select ng-model="filter" ng-change="changeFilter(filter)">
+            <option>Kebutuhan</option>
+            <option>Kesehatan</option>
+          </select>
+        </label>
+      </div>
       <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" >
         <ui-gmap-marker 
             ng-repeat="victim in victims" 
             coords="victim.coords" 
             idkey="victim.id" 
             options="victim.options"
-            icon="'img/help-' + victim.alertColor + '.png'">
+            icon="victim.data.icon">
               <ui-gmap-window options="windowOptions" closeClick="closeClick()">
                 <div>
                   <p ng-show="victim.data.photo != ''"><img ng-src="{{victim.data.photo}}" width="150px"/></p>
                   <p><b>Nama:</b> {{victim.data.name}}</p>
                   <p><b>Status:</b> {{victim.data.status}} <i class="ion-alert-circled alert-{{victim.alertColor}}"></i></p>
+                  <p><b>Kebutuhan:</b> {{victim.data.need.name}}</p>
                   <p><a href="#/victim/{{victim.id}}" class="button button-small button-block button-positive">Detail</a></p>
                 </div>
               </ui-gmap-window>

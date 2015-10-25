@@ -2,7 +2,7 @@
   <fader ng-click="openMenu()"></fader>
 
   <ion-side-menu side="left" width="{{width}}">
-    <ion-nav-bar>
+    <ion-nav-bar class="bar-stable">
       <ion-nav-back-button>
       </ion-nav-back-button>
       <ion-nav-buttons side="right">
@@ -34,7 +34,7 @@
   </ion-side-menu>
 
   <ion-side-menu-content style="width:80%; box-shadow: 0px 0px 50px rgba(0,0,0,.5); z-index: 999999999999999">
-    <ion-header-bar class="bar-light bar-menu">
+    <ion-header-bar class="bar-stable bar-menu">
       <div class="profile">
         <div class="profile-picture">
           <img ng-src="{{authHelper.getPicture(authData)}}" alt="">
@@ -43,7 +43,7 @@
           {{authHelper.getName(authData)}}
         </div>
         <div class="profile-location">
-          Bandung, Indonesia
+          
         </div>
       </div>
     </ion-header-bar>
@@ -88,12 +88,6 @@
         </ion-item> -->
       </ion-list>
     </ion-content>
-    <ion-footer-bar class="bar-energized bar-point">
-      <!-- <h1 class="title">Subscribe Now</h1> -->
-      <a href="http://warungsatekamu.org/" class="button button-full button-energized button-footer" target="_blank">
-        5000 poin
-      </a>
-    </ion-footer-bar>
   </ion-side-menu-content>
 </ion-side-menus>
 

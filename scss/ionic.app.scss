@@ -17,6 +17,7 @@ $dark:                            #444 !default;
 
 $energized:                       #bf3c2c !default;
 $light-green:                     #2ecc71 !default;
+$stable:                          #0061b2 !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -63,11 +64,11 @@ $bar-height: 230px;
 .verse-sidemenu {
 
     .scroll-content.has-menu {
-        top: $bar-height;
+        top: $bar-height !important;
     }
 
     .bar-menu {
-        height: $bar-height;
+        height: $bar-height !important;
         border-color: #ececec !important;
         .logo-header {
             background: url('../img/logo-header.png') no-repeat;
@@ -96,13 +97,13 @@ $bar-height: 230px;
             display: block;
             text-align: center;
             // font-family: 'GothamBold';
-            color: $energized;
+            color: $light;
             font-size: 1.2em;
           }
           .profile-location {
             text-align: center;
             // font-family: 'GothamMedium';
-            color: $energized;
+            color: $stable;
           }
         }
     }
@@ -111,7 +112,7 @@ $bar-height: 230px;
         font-weight: 500;
         a {
           font-size: .9em;
-          color: $energized;
+          color: $stable;
         }
         .item {
           border-color: #fafafa;
@@ -226,6 +227,41 @@ $picture-list-height : 140px;
      }
   }
 
+}
+
+.bar.bar-stable {
+    background-color: $stable;
+    color: #444;
+    border: none;
+    background-image: none;
+    
+    .title {
+        color: #fff;
+    }
+}
+
+.tab-item  {
+    .icon {
+        color: #fff;
+    }
+    .tab-title {
+        color: #fff;
+    }
+}
+
+.tabs-striped .tabs {
+    background: $stable;
+    border-width: 0;
+
+    .tab-item {
+        &.tab-item-active {
+            border-color: #fff !important;
+            border-width: 0px 0px 4px 0px !important;
+        }
+        &.activated {
+            border-color: #fff !important;
+        }
+    }
 }
 
 .item-wrap {
@@ -603,6 +639,9 @@ button.button-icon.round-overlay-button {
 .chart-commodity {
   height: 250px;
   width: 100%;
+}
+.button.button-text-white {
+    color: #fff !important;
 }
 
 #small-map {

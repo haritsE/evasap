@@ -144,7 +144,7 @@ angular.module('versinfocus.controllers', ['ionic'])
   };
 })
 
-.controller('VictimMapCtrl', function ($scope, $http, FBURL, $state, $stateParams, MapInit, $firebaseObject) {
+.controller('VictimMapCtrl', function ($scope, $http, FBURL, $state, $stateParams, MapInit, $firebaseObject, Helper) {
   MapInit.init($scope);
   MapInit.currentLocation($scope, function (coords) {
     $scope.map.center = coords;
@@ -152,33 +152,53 @@ angular.module('versinfocus.controllers', ['ionic'])
 
   var victims = [];
   var alertColor = "yellow";
-  $scope.loadData = function() {
-    $http.get(FBURL + "/victims.json").success(function(result){
-        for(key in result){
-          if(!result[key]) continue;
 
-          if(result[key].status == "Gejala"){
-            alertColor = "yellow";
-          } else if(result[key].status == "Parah"){
-            alertColor = "orange";
-          } else if(result[key].status == "Kritis"){
-            alertColor = "red";
+  $scope.changeFilter = function(filter) {
+    $scope.loadData(filter);
+  }
+
+  $scope.loadData = function(filter) {
+    $http.get(FBURL + "/needs.json").success(function (needs){
+      var list = Helper.flattenArray(needs);
+      $http.get(FBURL + "/victims.json").success(function(result){
+          for(key in result){
+            if(!result[key]) continue;
+
+            if(result[key].status == "Gejala"){
+              alertColor = "yellow";
+            } else if(result[key].status == "Parah"){
+              alertColor = "orange";
+            } else if(result[key].status == "Kritis"){
+              alertColor = "red";
+            }
+
+            var item = result[key];
+            item.id = key;
+            item.need = _.findWhere(list, {id: item.need_id});
+            item.icon = '';
+
+            if (filter == 'Kebutuhan') {
+              if (item.need) {
+                item.icon = item.need.icon_pin;
+              }
+            } else {
+              item.icon = 'img/help-' + alertColor + '.png';
+            }
+
+            victims.push({
+              id: key,
+              coords: {
+                latitude: parseFloat(item.latitude),
+                longitude: parseFloat(item.longitude)
+              },
+              options: { draggable: false },
+              data: item,
+              alertColor: alertColor
+            });
           }
-
-          victims.push({
-            id: key,
-            coords: {
-              latitude: parseFloat(result[key].latitude),
-              longitude: parseFloat(result[key].longitude)
-            },
-            options: { draggable: false },
-            data: result[key],
-            alertColor: alertColor,
-          });
-        }
-
-        $scope.victims = victims;
-    })
+          $scope.victims = victims;
+      });
+    });
   };
   $scope.loadData();
 
@@ -277,7 +297,7 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 })
 
-.controller('SupplyCtrl', function ($scope, $http, FBURL, Auth) {
+.controller('SupplyCtrl', function ($scope, $http, FBURL, Auth, $state) {
   $scope.data = {};
   $http.get(FBURL + "/organizations.json").success(function(result){
     var list = [];
@@ -316,7 +336,7 @@ angular.module('versinfocus.controllers', ['ionic'])
 
       $http.post(FBURL + '/supplies.json', $scope.data)
         .success(function() {
-          alert('Success');
+          $state.go('tab.needs');
         });
 
       $http.get(FBURL + '/needs/' + $scope.data.need_id + '.json').success(function(result){
@@ -327,7 +347,7 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 })
 
-.controller('OrganizationCtrl', function ($scope, $http, FBURL) {
+.controller('OrganizationCtrl', function ($scope, $http, FBURL, $state) {
   $scope.data = {};
   $scope.back = function() {
     window.history.back();
@@ -335,7 +355,7 @@ angular.module('versinfocus.controllers', ['ionic'])
   $scope.submit = function () {
     $http.post(FBURL + '/organizations.json', $scope.data)
       .success(function() {
-        alert('Success');
+        $state.go('organizations');
       });
   }
 })
@@ -452,7 +472,25 @@ angular.module('versinfocus.controllers', ['ionic'])
   });
 })
 
+.controller('VictimListCtrl', function ($scope, $http, FBURL, Helper, $stateParams) {
+  $http.get(FBURL + '/needs/' + $stateParams.need_id + '.json').success(function (need) {
+    $scope.need = need;
+  });
+  $scope.back = function() {
+    window.history.back();
+  }
+  $http.get(FBURL + '/victims.json').success(function (victims) {
+    $scope.victims = _.filter(Helper.flattenArray(victims), function (item) {
+      return item.need_id == $stateParams.need_id;
+    });
+  })
+
+})
+
 .controller('OrganizationsCtrl', function ($scope, $http, FBURL, Helper) {
+  $scope.back = function() {
+    window.history.back();
+  }
   $http.get(FBURL + '/organizations.json').success(function (result) {
     var orgs = [];
     for(key in result){
@@ -465,6 +503,9 @@ angular.module('versinfocus.controllers', ['ionic'])
 })
 
 .controller('ManageDonationsCtrl', function ($scope, $http, FBURL, Helper) {
+  $scope.back = function() {
+    window.history.back();
+  }
   $http.get(FBURL + '/supplies.json').success(function (result) {
     $http.get(FBURL + '/needs.json').success(function(needs){
       $http.get(FBURL + '/organizations.json').success(function(orgs){
