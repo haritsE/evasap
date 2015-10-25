@@ -26,7 +26,7 @@ angular.module('versinfocus.controllers', ['ionic'])
   setTimeout(function () {
     $scope.openMenu();
   });
-  
+
 
   $scope.logout = function() {
     $scope.auth.$unauth();
@@ -144,41 +144,61 @@ angular.module('versinfocus.controllers', ['ionic'])
   };
 })
 
-.controller('VictimMapCtrl', function ($scope, $http, FBURL, $state, $stateParams, MapInit, $firebaseObject) {
+.controller('VictimMapCtrl', function ($scope, $http, FBURL, $state, $stateParams, MapInit, $firebaseObject, Helper) {
   MapInit.init($scope);
   MapInit.currentLocation($scope, function (coords) {
     $scope.map.center = coords;
   });
 
-  var victims = []; 
+  var victims = [];
   var alertColor = "yellow";
-  $scope.loadData = function() {
-    $http.get(FBURL + "/victims.json").success(function(result){
-        for(key in result){
-          if(!result[key]) continue;
 
-          if(result[key].status == "Gejala"){
-            alertColor = "yellow";
-          } else if(result[key].status == "Parah"){
-            alertColor = "orange";
-          } else if(result[key].status == "Kritis"){
-            alertColor = "red";
+  $scope.changeFilter = function(filter) {
+    $scope.loadData(filter);
+  }
+
+  $scope.loadData = function(filter) {
+    $http.get(FBURL + "/needs.json").success(function (needs){
+      var list = Helper.flattenArray(needs);
+      $http.get(FBURL + "/victims.json").success(function(result){
+          for(key in result){
+            if(!result[key]) continue;
+
+            if(result[key].status == "Gejala"){
+              alertColor = "yellow";
+            } else if(result[key].status == "Parah"){
+              alertColor = "orange";
+            } else if(result[key].status == "Kritis"){
+              alertColor = "red";
+            }
+
+            var item = result[key];
+            item.id = key;
+            item.need = _.findWhere(list, {id: item.need_id});
+            item.icon = '';
+
+            if (filter == 'Kebutuhan') {
+              if (item.need) {
+                item.icon = item.need.icon_pin;
+              }
+            } else {
+              item.icon = 'img/help-' + alertColor + '.png';
+            }
+
+            victims.push({
+              id: key,
+              coords: {
+                latitude: parseFloat(item.latitude),
+                longitude: parseFloat(item.longitude)
+              },
+              options: { draggable: false },
+              data: item,
+              alertColor: alertColor
+            });
           }
-
-          victims.push({
-            id: key,
-            coords: {
-              latitude: parseFloat(result[key].latitude),
-              longitude: parseFloat(result[key].longitude)
-            },
-            options: { draggable: false },
-            data: result[key],
-            alertColor: alertColor,
-          });
-        }
-        
-        $scope.victims = victims;
-    })
+          $scope.victims = victims;
+      });
+    });
   };
   $scope.loadData();
 
@@ -276,7 +296,7 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 })
 
-.controller('SupplyCtrl', function ($scope, $http, FBURL) {
+.controller('SupplyCtrl', function ($scope, $http, FBURL, Auth, $state) {
   $scope.data = {};
   $http.get(FBURL + "/organizations.json").success(function(result){
     var list = [];
@@ -303,21 +323,30 @@ angular.module('versinfocus.controllers', ['ionic'])
   }
 
   $scope.submit = function () {
-    $http.post(FBURL + '/supplies.json', $scope.data)
-      .success(function() {
-        alert('Success');
+    Auth.$onAuth(function(authData) {
+      console.log(authData);
+      if (authData) {
+        $scope.data.donator_id = authData.uid;
+      } else {
+        $scope.data.donator_id = null;
+      }
+
+      $scope.data.status = "pending";
+
+      $http.post(FBURL + '/supplies.json', $scope.data)
+        .success(function() {
+          $state.go('tab.needs');
+        });
+
+      $http.get(FBURL + '/needs/' + $scope.data.need_id + '.json').success(function(result){
+        result.supply = parseInt(result.supply) + parseInt($scope.data.quantity);
+        $http.put(FBURL + '/needs/' + $scope.data.need_id + '.json', result);
       });
-
-    // console.log($scope.data.need_id);
-
-    $http.get(FBURL + '/needs/' + $scope.data.need_id + '.json').success(function(result){
-      result.supply = parseInt(result.supply) + parseInt($scope.data.quantity);
-      $http.put(FBURL + '/needs/' + $scope.data.need_id + '.json', result);
     });
   }
 })
 
-.controller('OrganizationCtrl', function ($scope, $http, FBURL) {
+.controller('OrganizationCtrl', function ($scope, $http, FBURL, $state) {
   $scope.data = {};
   $scope.back = function() {
     window.history.back();
@@ -325,7 +354,7 @@ angular.module('versinfocus.controllers', ['ionic'])
   $scope.submit = function () {
     $http.post(FBURL + '/organizations.json', $scope.data)
       .success(function() {
-        alert('Success');
+        $state.go('organizations');
       });
   }
 })
@@ -354,22 +383,21 @@ angular.module('versinfocus.controllers', ['ionic'])
     $scope.map.center = coords;
   });
 
-  var detectors = []; 
+  var detectors = [];
   $scope.loadData = function() {
     $http.get(FBURL + "/smoke-network.json").success(function(result){
         for(key in result){
           if(!result[key]) continue;
-          result[key].latestDate = moment.unix(result[key].latestTimestamp).locale('id').format("dddd, MMMM Do YYYY, h:mm:ss a");
+          result[key].latestDate = moment(result[key].latestTimestamp).locale('id').format("dddd, MMMM Do YYYY, h:mm:ss a");
           $scope.severityLevel = 1;
-          if(result[key].latestValue < 500){
+          if(result[key].latestValue > 250){
             $scope.severityLevel = 2;
-          } else if(result[key].latestValue < 750){
+          } else if(result[key].latestValue > 500){
             $scope.severityLevel = 3;
-          } else if(result[key].latestValue < 1024){
+          } else if(result[key].latestValue > 750){
             $scope.severityLevel = 4;
           }
 
-          if(result[key].latestDate)
           detectors.push({
             id: key,
             coords: {
@@ -380,7 +408,7 @@ angular.module('versinfocus.controllers', ['ionic'])
             data: result[key]
           });
         }
-        
+
         $scope.detectors = detectors;
     })
   };
@@ -455,4 +483,61 @@ angular.module('versinfocus.controllers', ['ionic'])
       return item.need_id == $stateParams.need_id;
     });
   })
+
+})
+
+.controller('OrganizationsCtrl', function ($scope, $http, FBURL, Helper) {
+  $scope.back = function() {
+    window.history.back();
+  }
+  $http.get(FBURL + '/organizations.json').success(function (result) {
+    var orgs = [];
+    for(key in result){
+      if(!result[key]) continue;
+      result[key].id = key;
+      orgs.push(result[key])
+    }
+    $scope.orgs = orgs;
+  });
+})
+
+.controller('ManageDonationsCtrl', function ($scope, $http, FBURL, Helper) {
+  $scope.back = function() {
+    window.history.back();
+  }
+  $http.get(FBURL + '/supplies.json').success(function (result) {
+    $http.get(FBURL + '/needs.json').success(function(needs){
+      $http.get(FBURL + '/organizations.json').success(function(orgs){
+        $http.get(FBURL + '/users.json').success(function(users){
+          var supplies = [];
+          for(key in result){
+            if(!result[key]) continue;
+            result[key].id = key;
+
+            var tmpSupply = result[key];
+
+            tmpSupply.user = _.findWhere(Helper.flattenArray(users), {id: tmpSupply.donator_id});
+            tmpSupply.need = _.findWhere(Helper.flattenArray(needs), {id: tmpSupply.need_id});
+            tmpSupply.org = _.findWhere(Helper.flattenArray(orgs), {id: tmpSupply.org_id});
+
+            console.log(tmpSupply);
+
+            supplies.push(tmpSupply);
+          }
+          $scope.supplies = supplies;
+        });
+      });
+    });
+  });
+
+
+  $scope.nextStatus = function(supply){
+    if(supply.status == "pending"){
+      supply.status = "diproses";
+    } else if(supply.status == "diproses"){
+      supply.status = "diterima";
+    }
+
+    $http.put(FBURL + "/supplies/" + supply.id + ".json", supply);
+  }
 });

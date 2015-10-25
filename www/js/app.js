@@ -84,6 +84,18 @@ angular.module('versinfocus', [
     controller: 'OrganizationCtrl'
   })
 
+  .state('organizations', {
+    url: '/organizations',
+    templateUrl: 'templates/organizations.html',
+    controller: 'OrganizationsCtrl'
+  })
+
+  .state('manageDonations', {
+    url: '/manage-donations',
+    templateUrl: 'templates/manage-donations.html',
+    controller: 'ManageDonationsCtrl'
+  })
+
   .state('tips', {
     url: '/tips',
     templateUrl: 'templates/tips.html',
