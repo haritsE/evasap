@@ -563,8 +563,8 @@ angular.module('versinfocus.controllers', ['ionic'])
   });
 
   $scope.nextStatus = function(victim){
-    if(victim.status == "menunggu"){
-      victim.status = "terpenuhi";
+    if(victim.need_status == "menunggu"){
+      victim.need_status = "terpenuhi";
     }
 
     $http.put(FBURL + "/victims/" + victim.id + ".json", victim);

@@ -14,7 +14,7 @@
           <p><b>Status Kebutuhan</b>: {{victim.need_status}}</p>
           <p><b>Kebutuhan</b>: {{victim.need.name}}</p>
           <p><b>Kuantitas</b>: {{victim.quantity}}</p>
-          <a href="#" ng-show="victim.status != 'diterima'" ng-click="nextStatus(victim)" class="button button-small button-positive">{{(victim.status == "menunggu" ? "Menunggu Bantuan" : "Donasi telah diterima korban")}}</a>
+          <a href="#" ng-show="victim.status != 'diterima'" ng-click="nextStatus(victim)" class="button button-small button-positive">{{(victim.need_status == "menunggu" ? "Menunggu Bantuan" : "Donasi telah diterima korban")}}</a>
         </div>
     </div>
   </ion-content>
