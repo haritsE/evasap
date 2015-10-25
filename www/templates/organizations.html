@@ -1,0 +1,19 @@
+<ion-view>
+  <ion-header-bar align-title="left" class="bar-stable">
+    <div class="buttons">
+      <button class="button button-icon icon ion-ios-arrow-back" ng-click="back()"></button>
+    </div>
+    <h1 class="title">List Organisasi</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+        <a class="item item-avatar" href="#" ng-repeat="org in orgs">
+          <img ng-src="{{org.logo}}">
+          <h2>{{org.name}}</h2>
+          <p>{{org.description}}</p>
+          <p>Alamat Donasi: {{org.address}}</p>
+          <p>Tipe Organisasi: {{org.type}}</p>
+        </a>
+    </div>
+  </ion-content>
+</ion-view>
